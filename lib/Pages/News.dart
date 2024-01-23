@@ -2,14 +2,17 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
+import 'package:sms_postman/Pages/Portfolio.dart';
+import 'package:sms_postman/Services/Colors.dart';
 import 'package:sms_postman/Services/ConstantFile.dart';
 
 class NewsTile extends StatelessWidget {
   final String newsType;
   final String newsDescription;
   final String timeSincePosted;
-
-  NewsTile({required this.newsType, required this.newsDescription, required this.timeSincePosted});
+  final String newstitle;
+  final String idnews;
+  NewsTile({required this.newsType, required this.newsDescription, required this.timeSincePosted,required this.newstitle,required this.idnews});
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +68,17 @@ class NewsTile extends StatelessWidget {
               Spacer(),
               IconButton(
                 onPressed: () {
-                  // Handle button press here
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => NewsCardView(
+                        createdat: timeSincePosted,
+                        newstitle: newstitle,
+                        newsdescription: newsDescription,
+                        idno:idnews,
+                      ),
+                    ),
+                  );
                 },
                 icon: Icon(Icons.chevron_right,size: 35,color: Colors.white,),
               ),
@@ -76,7 +89,6 @@ class NewsTile extends StatelessWidget {
     );
   }
 }
-
 class News extends StatefulWidget {
   const News({super.key});
 
@@ -184,10 +196,12 @@ class _NewsState extends State<News> {
                               children: [
                                 NewsTile(
                                   newsType: 'Business',
-                                  newsDescription: newsList[index].title.toString(),
+                                  newsDescription: newsList[index].content.toString(),
                                   timeSincePosted: newsList[index].timeAgo.toString(),
+                                  newstitle:newsList[index].title.toString(),
+                                  idnews: newsList[index].id.toString(),
                                 ),
-                                Divider( // Divider between list items
+                                Divider(
                                   height: 1,
                                   color: Color(0xff515151),
                                   thickness: 4,
@@ -208,4 +222,176 @@ class _NewsState extends State<News> {
     );
   }
 
+}
+
+class NewsCardView extends StatelessWidget {
+  final String newstitle;
+  final String newsdescription;
+  final String createdat;
+  final String idno;
+
+  NewsCardView({
+    Key? key,
+    required this.newstitle,
+    required this.newsdescription,
+    required this.createdat,
+    required this.idno,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    double pW = MediaQuery.of(context).size.width;
+    double pH = MediaQuery.of(context).size.height;
+    return Scaffold(
+      backgroundColor: Colors.black,
+      body: Container(
+        height: pH,
+        width: pW,
+        child: Stack(
+          children: [
+            Positioned(
+              top: 0,
+              right: 0,
+              child: BackdropFilter(
+                filter: ImageFilter.blur(sigmaX: 100, sigmaY: 0),
+                child: Image.asset('assets/bg1.png'),
+              ),
+            ),
+            Positioned(
+              top: 0,
+              left: 0,
+              right: 0,
+              child: AppBar(
+                shadowColor: Colors.transparent,
+                backgroundColor: Colors.transparent,
+                centerTitle: false,
+                iconTheme: IconThemeData(color: Colors.white),
+                title: Text(
+                  'News',
+                  style: TextStyle(
+                    fontSize: 24.0,
+                    color: Colors.white,
+                    fontFamily: 'CircularSpotifyTxT-Bold',
+                  ),
+                ),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.fromLTRB(8.0,8.0,8.0,8.0),
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: pH * 0.1,
+                  ),
+                  Container(
+                    width:pW,
+                      height: pH*0.26,
+                      child: Image.asset(
+                          'assets/newsimage.png',
+                      ),
+                  ),
+                  Expanded(
+                      child: Container(
+                        padding: EdgeInsets.fromLTRB(8, 0, 8, 0),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(20.0),
+                            topRight: Radius.circular(20.0),
+                            bottomLeft: Radius.circular(0.0),
+                            bottomRight: Radius.circular(0.0),
+                          ),
+                          color: MyColors.color16,
+                        ),
+                        width: double.infinity,
+                        child: Column(
+                          children: [
+                            SizedBox(height:pH*0.05),
+                            Container(
+                              width: pW*0.84,
+                              child: Text(
+                                newstitle,
+                                style: TextStyle(
+                                  color: Colors.white,
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                            SizedBox(height:pH*0.024),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Container(
+                                  child: Text(
+                                    '250 views',
+                                    style:TextStyle(
+                                      color:Colors.white,
+                                    )
+                                  ),
+                                ),
+                                Row(
+                                  children: [
+                                    Container(
+                                      width:pW*0.035,
+                                      height:pH*0.014,
+                                      child: Image.asset(
+                                          'assets/Clock.png',
+                                      ),
+                                    ),
+                                    SizedBox(width: pW*0.01,),
+                                    Container(
+                                      child: Text(
+                                          createdat,
+                                          style:TextStyle(
+                                            color:Colors.white,
+                                          )
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                            SizedBox(height:pH*0.021),
+                            Container(
+                              width: pW*0.915,
+                              height:pH*0.21,
+                              child:Text(
+                                newsdescription,
+                                style: TextStyle(
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                            SizedBox(height:pH*0.01),
+                            Container(
+                              width: double.infinity,
+                              child: Divider(
+                                color: Color(0xFF515151),
+                                thickness: 2,
+                              ),
+                            ),
+                            SizedBox(height:pH*0.01),
+                            Row(
+                              children: [
+                                Container(
+                                  child: Text(
+                                    'Comments',
+                                    style:TextStyle(
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 }
