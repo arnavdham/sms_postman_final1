@@ -1,12 +1,12 @@
-class userprofiledata {
+class UserProfile {
   String? fullName;
   String? email;
   String? picture;
   String? balance;
 
-  userprofiledata({this.fullName, this.email, this.picture, this.balance});
+  UserProfile({this.fullName, this.email, this.picture, this.balance});
 
-  userprofiledata.fromJson(Map<String, dynamic> json) {
+  UserProfile.fromJson(Map<String, dynamic> json) {
     fullName = json['fullName'];
     email = json['email'];
     picture = json['picture'];

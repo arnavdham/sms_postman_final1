@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
-import 'package:sms_postman/Services/AccessTokensFunctions.dart';
 import 'package:sms_postman/Services/CandleChart.dart';
 import 'package:sms_postman/Services/Colors.dart';
 import 'dart:ui';
-import 'package:http/http.dart' as http;
+import 'package:sms_postman/Services/ConstantFile.dart';
+
 class StockCard extends StatelessWidget {
   final String imageUrl;
   final String name;
@@ -56,239 +56,237 @@ class StockCard extends StatelessWidget {
 }
 class Portfolio extends StatefulWidget {
   const Portfolio({super.key});
-
   @override
   State<Portfolio> createState() => _PortfolioState();
 }
-
 class _PortfolioState extends State<Portfolio> {
-  Future fetchPortfolio() async {
-    final actok = await getAccessToken();
-    final response = await http.get(
-      Uri.parse('https://smsapp.bits-postman-lab.in/stocks'),
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': actok.toString(),
-      },
-    );
-    print(response.body);
-  }
   @override
   void initState() {
     super.initState();
-    fetchPortfolio();
+    fetchStocks();
   }
   @override
   Widget build(BuildContext context) {
     double pW = MediaQuery.of(context).size.width;
     double pH = MediaQuery.of(context).size.height;
-    return Scaffold(
-      backgroundColor: Colors.black,
-      body: Stack(
-        children: [
-          Positioned(
-            top: 0,
-            right: 0,
-            child: BackdropFilter(
-              filter: ImageFilter.blur(sigmaX: 100, sigmaY: 100),
-              child: Image.asset('assets/bg1.png'),
-            ),
-          ),
-          Positioned(
-            bottom: 0,
-            left: 0,
-            child: BackdropFilter(
-              filter: ImageFilter.blur(sigmaX: 100, sigmaY: 100),
-              child: Image.asset('assets/bg2.png'),
-            ),
-          ),
-          Positioned(
-            top: 0,
-            left: 0,
-            right: 0,
-            child: AppBar(
-              shadowColor: Colors.transparent,
-              backgroundColor: Colors.transparent,
-              leading: IconButton(
-                onPressed: () {
-                  if (ZoomDrawer.of(context)!.isOpen()) {
-                    ZoomDrawer.of(context)!.close();
-                  } else {
-                    ZoomDrawer.of(context)!.open();
-                  }
-                },
-                icon: SvgPicture.asset('assets/Drawer.svg'),
-              ),
-              centerTitle: false,
-              title: Text(
-                'Portfolio',
-                style: TextStyle(
-                  fontSize: 24.0,
-                  color: Colors.white,
-                  fontFamily: 'CircularSpotifyTxT-Bold',
-                ),
-              ),
-            ),
-          ),
-          Positioned(
-            top:pH*0.1,
-            left:0,
-            right:0,
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Container(
-                width: double.infinity,
-                child: Column(
-                  children: [
-                    Container(
-                      height:pH*0.120,
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(20.0),
-                          topRight: Radius.circular(20.0),
-                          bottomLeft: Radius.circular(0.0),
-                          bottomRight: Radius.circular(0.0),
-                        ),
-                        gradient: LinearGradient(
-                          begin: Alignment.topRight,
-                          end: Alignment.bottomLeft,
-                          colors: [MyColors.color20, MyColors.color19],
-                          stops: [0.3, 1.0], // 30% of the gradient is color20, 70% is color19
-                        ),
-                      ),
-                      child: Padding(
-                        padding: EdgeInsets.all(16.0),
-                        child: Row(
-                          children: [
-                            Column(
-                              // crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'Total Balance',
-                                  style: TextStyle(
-                                    fontSize: 15,
-                                    color: Colors.white,
-                                    fontFamily: 'CircularSpotifyTxT-Bold',
-                                  ),
-                                ),
-                                SizedBox(height:pH*0.0056),
-                                Text(
-                                  '\$13450.00',
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white,
-                                    fontFamily: 'CircularSpotifyTxT-Bold',
-                                  ),
-                                ),
-                                // SizedBox(height: 16),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    Container(
-                      height: pH*0.11,
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(0.0),
-                          topRight: Radius.circular(0.0),
-                          bottomLeft: Radius.circular(20.0),
-                          bottomRight: Radius.circular(20.0),
-                        ),
-                        color: MyColors.color2,
-                      ),
-                      child: Padding(
-                        padding: EdgeInsets.fromLTRB(16,16,16,16.0),
-                        child: Row(
-                          children: [
-                            Column(
-                              // mainAxisAlignment: MainAxisAlignment.start,
-                              // crossAxisAlignment: CrossAxisAlignment.stretch,
-                              children: [
-                                Text(
-                                  // textAlign: TextAlign.left,
-                                  'Profit',
-                                  style: TextStyle(color: Colors.green,fontFamily: 'CircularSpotifyTxT-Bold',),
-                                ),
-                                SizedBox(
-                                  height: pH*0.0056,
-                                ),
-                                Text(
-                                  // textAlign: TextAlign.left,
-                                  '\$13250.00',
-                                  style: TextStyle(color: Colors.white,fontFamily: 'CircularSpotifyTxT-Bold',),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-              ),
-            ),
-          ),
-          Positioned(
-            top:pH*0.38,
-            left:0,
-            right:0,
-            child: Padding(
-              padding: EdgeInsets.fromLTRB(16,0,16,0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+    return FutureBuilder(
+        future:fetchUser(),
+        builder: (context,snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(child: CircularProgressIndicator());
+          } else if (snapshot.hasError) {
+            return Text('Error: ${snapshot.error}');
+          } else {
+            return Scaffold(
+              backgroundColor: Colors.black,
+              body: Stack(
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'My Stocks',
+                  Positioned(
+                    top: 0,
+                    right: 0,
+                    child: BackdropFilter(
+                      filter: ImageFilter.blur(sigmaX: 100, sigmaY: 100),
+                      child: Image.asset('assets/bg1.png'),
+                    ),
+                  ),
+                  Positioned(
+                    bottom: 0,
+                    left: 0,
+                    child: BackdropFilter(
+                      filter: ImageFilter.blur(sigmaX: 100, sigmaY: 100),
+                      child: Image.asset('assets/bg2.png'),
+                    ),
+                  ),
+                  Positioned(
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    child: AppBar(
+                      shadowColor: Colors.transparent,
+                      backgroundColor: Colors.transparent,
+                      leading: IconButton(
+                        onPressed: () {
+                          if (ZoomDrawer.of(context)!.isOpen()) {
+                            ZoomDrawer.of(context)!.close();
+                          } else {
+                            ZoomDrawer.of(context)!.open();
+                          }
+                        },
+                        icon: SvgPicture.asset('assets/Drawer.svg'),
+                      ),
+                      centerTitle: false,
+                      title: Text(
+                        'Portfolio',
                         style: TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.bold,
+                          fontSize: 24.0,
                           color: Colors.white,
                           fontFamily: 'CircularSpotifyTxT-Bold',
                         ),
                       ),
-                      IconButton(
-                        icon: SvgPicture.asset('assets/shorts.svg'),
-                        onPressed: () {
-                        },
-                      ),
-                    ],
-                  ),
-                  Container(
-                    height: pH*0.47,
-                    // padding: EdgeInsets.fromLTRB(16,0,16,0),
-                    child: ListView.builder(
-                      itemCount: 10,
-                      itemBuilder: (context, index) {
-                        final imageUrl = '/* Stock image URL */';
-                        final stockName = 'Castrol India Ltd.';
-                        final currentPrice = '-3.1 (-2.29%)';
-                        final change = 'Rs 134.25';
-                        final shares='14 shares';
-
-                        return ExpandableCard(
-                          imageUrl: imageUrl,
-                          stockName: stockName,
-                          currentPrice: currentPrice,
-                          change: change,
-                          shares:shares,
-                        );
-                      },
                     ),
+                  ),
+                  Positioned(
+                    top:pH*0.1,
+                    left:0,
+                    right:0,
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Container(
+                        width: double.infinity,
+                        child: Column(
+                          children: [
+                            Container(
+                              height:pH*0.120,
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(20.0),
+                                  topRight: Radius.circular(20.0),
+                                  bottomLeft: Radius.circular(0.0),
+                                  bottomRight: Radius.circular(0.0),
+                                ),
+                                gradient: LinearGradient(
+                                  begin: Alignment.topRight,
+                                  end: Alignment.bottomLeft,
+                                  colors: [MyColors.color20, MyColors.color19],
+                                  stops: [0.3, 1.0], // 30% of the gradient is color20, 70% is color19
+                                ),
+                              ),
+                              child: Padding(
+                                padding: EdgeInsets.all(16.0),
+                                child: Row(
+                                  children: [
+                                    Column(
+                                      // crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          'Total Balance',
+                                          style: TextStyle(
+                                            fontSize: 15,
+                                            color: Colors.white,
+                                            fontFamily: 'CircularSpotifyTxT-Bold',
+                                          ),
+                                        ),
+                                        SizedBox(height:pH*0.0056),
+                                        Text(
+                                          '\$ ${userdatbject!.balance.toString()}',
+                                          style: TextStyle(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.white,
+                                            fontFamily: 'CircularSpotifyTxT-Bold',
+                                          ),
+                                        ),
+                                        // SizedBox(height: 16),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            Container(
+                              height: pH*0.11,
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(0.0),
+                                  topRight: Radius.circular(0.0),
+                                  bottomLeft: Radius.circular(20.0),
+                                  bottomRight: Radius.circular(20.0),
+                                ),
+                                color: MyColors.color2,
+                              ),
+                              child: Padding(
+                                padding: EdgeInsets.fromLTRB(16,16,16,16.0),
+                                child: Row(
+                                  children: [
+                                    Column(
+                                      // mainAxisAlignment: MainAxisAlignment.start,
+                                      // crossAxisAlignment: CrossAxisAlignment.stretch,
+                                      children: [
+                                        Text(
+                                          // textAlign: TextAlign.left,
+                                          'Profit',
+                                          style: TextStyle(color: Colors.green,fontFamily: 'CircularSpotifyTxT-Bold',),
+                                        ),
+                                        SizedBox(
+                                          height: pH*0.0056,
+                                        ),
+                                        Text(
+                                          // textAlign: TextAlign.left,
+                                          '\$13250.00',
+                                          style: TextStyle(color: Colors.white,fontFamily: 'CircularSpotifyTxT-Bold',),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    top:pH*0.38,
+                    left:0,
+                    right:0,
+                    child: Padding(
+                      padding: EdgeInsets.fromLTRB(16,0,16,0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'My Stocks',
+                                style: TextStyle(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white,
+                                  fontFamily: 'CircularSpotifyTxT-Bold',
+                                ),
+                              ),
+                              IconButton(
+                                icon: SvgPicture.asset('assets/shorts.svg'),
+                                onPressed: () {
+                                },
+                              ),
+                            ],
+                          ),
+                          Container(
+                            height: pH*0.47,
+                            // padding: EdgeInsets.fromLTRB(16,0,16,0),
+                            child: ListView.builder(
+                              itemCount: stocksd.length,
+                              itemBuilder: (context, index) {
+                                final imageUrl = '/* Stock image URL */';
+                                final stockName = stocksd[index].name.toString();
+                                final currentPrice = stocksd[index].price.toString();
+                                final change = 'Rs 134.25';
+                                final shares='${stocksd[index].quantity.toString()} shares';
+
+                                return ExpandableCard(
+                                  imageUrl: imageUrl,
+                                  stockName: stockName,
+                                  currentPrice: currentPrice,
+                                  change: change,
+                                  shares:shares,
+                                );
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                    )
                   ),
                 ],
               ),
-            )
-          ),
-        ],
-      ),
+            );
+          }
+        }
     );
   }
 }
