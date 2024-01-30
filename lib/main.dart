@@ -31,6 +31,7 @@ class MyApp extends StatelessWidget {
         title: 'Flutter Demo',
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: MyColors.color11),
+          splashColor: Colors.transparent,
           useMaterial3: true,
         ),
         home: const DrawerScreens(),

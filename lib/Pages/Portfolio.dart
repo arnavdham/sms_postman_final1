@@ -328,7 +328,11 @@ class _ExpandableCardState extends State<ExpandableCard> {
         child: Container(
           height: MediaQuery.of(context).size.height*0.09,
           child: ListTile(
+            splashColor: Colors.transparent,
             tileColor: Colors.transparent,
+            selectedTileColor: Colors.transparent,
+            focusColor: Colors.transparent,
+            hoverColor: Colors.transparent,
             onTap: () {
               Navigator.push(
                 context,
