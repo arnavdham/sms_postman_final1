@@ -40,18 +40,11 @@ dependencies:
   flutter_spinkit:
   google_sign_in: ^6.2.1
   google_fonts:
-  spacer: ^1.0.0
-  sizer: ^2.0.15
   syncfusion_flutter_charts:
   http:
   url_launcher:
-  html:
-  web_scraper:
-  google_sign_in_web_redirect:
-#  webview_flutter:
-  flutter_inappwebview: ^5.0.5
-  webview_flutter: ^2.0.10
   shared_preferences: ^2.2.2
+  sizer:
 dev_dependencies:
   flutter_test:
     sdk: flutter

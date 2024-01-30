@@ -545,7 +545,6 @@ class _HomeState extends State<Home> {
                                   width: pW * 0.91,
                                   height: pH*0.17,
                                   decoration: BoxDecoration(
-// color: MyColors.color11,
                                       color: Colors.transparent,
                                       borderRadius: BorderRadius.circular(10)
                                   ),

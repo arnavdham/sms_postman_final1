@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:sms_postman/Services/ConstantFile.dart';
+import 'package:sms_postman/main.dart';
 import 'Colors.dart';
 import 'package:http/http.dart' as http;
 class Navbar extends StatefulWidget {
@@ -11,6 +13,21 @@ class Navbar extends StatefulWidget {
 }
 
 class _NavbarState extends State<Navbar> {
+  void googleLogout() async {
+    print("Logout method called.");
+    GoogleSignIn _googleSignIn = GoogleSignIn();
+
+    try {
+      await _googleSignIn.signOut();
+      print("Logged out successfully.");
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => MyApp()),
+      );
+    } catch (error) {
+      print("Error during logout: $error");
+    }
+  }
   @override
   Widget build(BuildContext context) {
     double pW = MediaQuery.of(context).size.width;
@@ -261,7 +278,7 @@ class _NavbarState extends State<Navbar> {
                             SizedBox(width: pW*0.05,),
                             TextButton(
                               onPressed:(){
-
+                                googleLogout();
                               },
                               child:Text(
                                 'Log Out',
