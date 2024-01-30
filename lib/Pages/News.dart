@@ -332,7 +332,7 @@ class NewsCardView extends StatelessWidget {
                                   children: [
                                     Container(
                                       width:pW*0.035,
-                                      height:pH*0.014,
+                                      height:pH*0.014                                                                   ,
                                       child: Image.asset(
                                           'assets/Clock.png',
                                       ),
