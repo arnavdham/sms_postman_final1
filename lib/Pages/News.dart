@@ -81,6 +81,10 @@ class NewsTile extends StatelessWidget {
                   );
                 },
                 icon: Icon(Icons.chevron_right,size: 35,color: Colors.white,),
+                style: ButtonStyle(
+                  overlayColor: MaterialStateProperty.all(Colors.transparent),
+                  splashFactory: NoSplash.splashFactory,
+                ),
               ),
             ],
           ),
@@ -201,10 +205,13 @@ class _NewsState extends State<News> {
                                   newstitle:newsList[index].title.toString(),
                                   idnews: newsList[index].id.toString(),
                                 ),
-                                Divider(
-                                  height: 1,
-                                  color: Color(0xff515151),
-                                  thickness: 4,
+                                Opacity(
+                                  opacity:0.5,
+                                  child: Divider(
+                                    height: 1,
+                                    color: Color(0xff515151),
+                                    thickness: 3,
+                                  ),
                                 ),
                                 SizedBox(height: 5.0,),
                               ],

@@ -492,6 +492,10 @@ class _HomeState extends State<Home> {
                             }
                           },
                           icon: SvgPicture.asset('assets/Drawer.svg'),
+                          style: ButtonStyle(
+                            overlayColor: MaterialStateProperty.all(Colors.transparent),
+                            splashFactory: NoSplash.splashFactory,
+                          ),
                         ),
                         centerTitle: false,
                         title: Text(
@@ -664,7 +668,12 @@ class _HomeState extends State<Home> {
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) => Crypto()));
+
                                     },
+                                    style: ButtonStyle(
+                                      overlayColor: MaterialStateProperty.all(Colors.transparent),
+                                      splashFactory: NoSplash.splashFactory,
+                                    ),
                                     child: Column(
                                       children: [
                                         SizedBox(height: pH*0.003,),
@@ -693,6 +702,10 @@ class _HomeState extends State<Home> {
                                   child: TextButton(
                                     onPressed: () {
                                     },
+                                    style: ButtonStyle(
+                                      splashFactory: NoSplash.splashFactory,
+                                      overlayColor: MaterialStateProperty.all(Colors.transparent),
+                                    ),
                                     child: Column(
                                       children: [
                                         SizedBox(height: pH*0.003,),
@@ -799,6 +812,10 @@ class _HomeState extends State<Home> {
                                 IconButton(
                                   icon: SvgPicture.asset('assets/addpink.svg'),
                                   onPressed: () {},
+                                  style: ButtonStyle(
+                                    overlayColor: MaterialStateProperty.all(Colors.transparent),
+                                    splashFactory: NoSplash.splashFactory,
+                                  ),
                                 ),
                               ],
                             ),

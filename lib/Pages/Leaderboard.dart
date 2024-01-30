@@ -106,6 +106,10 @@ class _LeaderboardState extends State<Leaderboard> {
                           }
                         },
                         icon: SvgPicture.asset('assets/Drawer.svg'),
+                        style: ButtonStyle(
+                          overlayColor: MaterialStateProperty.all(Colors.transparent),
+                          splashFactory: NoSplash.splashFactory,
+                        ),
                       ),
                       //centerTitle: true,
                       title: Text(

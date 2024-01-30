@@ -113,6 +113,10 @@ class _PortfolioState extends State<Portfolio> {
                           }
                         },
                         icon: SvgPicture.asset('assets/Drawer.svg'),
+                        style: ButtonStyle(
+                          overlayColor: MaterialStateProperty.all(Colors.transparent),
+                          splashFactory: NoSplash.splashFactory,
+                        ),
                       ),
                       centerTitle: false,
                       title: Text(
@@ -253,6 +257,10 @@ class _PortfolioState extends State<Portfolio> {
                                 icon: SvgPicture.asset('assets/shorts.svg'),
                                 onPressed: () {
                                 },
+                                style: ButtonStyle(
+                                  overlayColor: MaterialStateProperty.all(Colors.transparent),
+                                  splashFactory: NoSplash.splashFactory,
+                                ),
                               ),
                             ],
                           ),

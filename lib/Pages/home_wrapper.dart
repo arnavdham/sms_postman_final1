@@ -58,6 +58,10 @@ class _HomeWrapperState extends State<HomeWrapper> {
                         activePage = index;
                       });
                     },
+                    style: ButtonStyle(
+                      overlayColor: MaterialStateProperty.all(Colors.transparent),
+                      splashFactory: NoSplash.splashFactory,
+                    ),
                     icon: SvgPicture.asset(
                       items[index],
                       color: activePage == index ? MyColors.color18 : Colors.white,
