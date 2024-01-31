@@ -1,6 +1,6 @@
 class LeaderBoarData {
   String? fullName;
-  String? balance;
+  int? balance;
   int? position;
   String? picture;
   bool? isYou;
@@ -10,7 +10,10 @@ class LeaderBoarData {
 
   LeaderBoarData.fromJson(Map<String, dynamic> json) {
     fullName = json['fullName'];
-    balance = json['balance'];
+    balance=json['balance'];
+    // if (json['balance'] != null) {
+    //   balance = double.parse(json['balance']);
+    // }
     position = json['position'];
     picture = json['picture'];
     isYou = json['isYou'];

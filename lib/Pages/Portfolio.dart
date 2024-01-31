@@ -69,6 +69,9 @@ class _PortfolioState extends State<Portfolio> {
   Widget build(BuildContext context) {
     double pW = MediaQuery.of(context).size.width;
     double pH = MediaQuery.of(context).size.height;
+    // return Scaffold(
+    //   backgroundColor: Colors.yellow,
+    // );
     return FutureBuilder(
         future:fetchUser(),
         builder: (context,snapshot) {

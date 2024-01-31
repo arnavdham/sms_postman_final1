@@ -2,7 +2,7 @@ class Stocks {
   String? id;
   String? name;
   String? symbol;
-  String? price;
+  int? price;
   bool? isCrypto;
   bool? isStock;
   int? quantity;
@@ -20,7 +20,7 @@ class Stocks {
     id = json['id'];
     name = json['name'];
     symbol = json['symbol'];
-    price = json['price'];
+    price=json['price'];
     isCrypto = json['isCrypto'];
     isStock = json['isStock'];
     quantity = json['quantity'];

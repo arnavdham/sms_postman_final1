@@ -23,6 +23,7 @@ Future fetchStocks() async {
   );
   if (response.statusCode == 200) {
     if (response.body != null && response.body.isNotEmpty) {
+      // print(response.body);
       List<dynamic> jsonData = json.decode(response.body);
       stocksd = jsonData.map((data) => Stocks.fromJson(data)).toList();
     } else {
@@ -67,6 +68,7 @@ Future fetchNews() async {
     if (response.body != null && response.body.isNotEmpty) {
       List<dynamic> jsonData = json.decode(response.body);
       newsList = jsonData.map((data) => Newsd.fromJson(data)).toList();
+      // print(response.body);
     } else {
       print("Response body is null or empty.");
     }
@@ -88,7 +90,9 @@ Future fetchUser() async{
     if (response.body != null && response.body.isNotEmpty) {
       dynamic jsonData = json.decode(response.body);
       if (jsonData is Map<String, dynamic>) {
+        // print(response.body);
         userlist = [UserProfile.fromJson(jsonData)];
+
         userdatbject=userlist[0];
       } else {
         print("Invalid JSON format. Expected a Map.");

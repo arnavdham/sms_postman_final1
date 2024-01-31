@@ -2,7 +2,7 @@ class UserProfile {
   String? fullName;
   String? email;
   String? picture;
-  String? balance;
+  int? balance;
 
   UserProfile({this.fullName, this.email, this.picture, this.balance});
 

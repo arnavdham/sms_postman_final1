@@ -382,7 +382,7 @@ class _LeaderboardState extends State<Leaderboard> {
                                                   ),
                                                 ),
                                                 Text(
-                                                  "$points",
+                                                  '$points',
                                                   style: TextStyle(
                                                     color: Colors.white,
                                                     fontSize: 14.40,
