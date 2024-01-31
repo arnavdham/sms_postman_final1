@@ -171,7 +171,6 @@ class _NewsState extends State<News> {
                   Column(
                     children: <Widget>[
                       SizedBox(height:pH*0.1),
-                      SizedBox(height: 20.0),
                       Container(
                         padding: EdgeInsets.only(left:15),
                         alignment: Alignment.topLeft,

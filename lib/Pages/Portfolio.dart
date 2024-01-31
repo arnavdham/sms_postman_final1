@@ -101,195 +101,388 @@ class _PortfolioState extends State<Portfolio> {
                     top: 0,
                     left: 0,
                     right: 0,
-                    child: AppBar(
-                      shadowColor: Colors.transparent,
-                      backgroundColor: Colors.transparent,
-                      leading: IconButton(
-                        onPressed: () {
-                          if (ZoomDrawer.of(context)!.isOpen()) {
-                            ZoomDrawer.of(context)!.close();
-                          } else {
-                            ZoomDrawer.of(context)!.open();
-                          }
-                        },
-                        icon: SvgPicture.asset('assets/Drawer.svg'),
-                        style: ButtonStyle(
-                          overlayColor: MaterialStateProperty.all(Colors.transparent),
-                          splashFactory: NoSplash.splashFactory,
-                        ),
-                      ),
-                      centerTitle: false,
-                      title: Text(
-                        'Portfolio',
-                        style: TextStyle(
-                          fontSize: 24.0,
-                          color: Colors.white,
-                          fontFamily: 'CircularSpotifyTxT-Bold',
-                        ),
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    top:pH*0.1,
-                    left:0,
-                    right:0,
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Container(
-                        width: double.infinity,
-                        child: Column(
-                          children: [
-                            Container(
-                              height:pH*0.120,
-                              width: double.infinity,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(20.0),
-                                  topRight: Radius.circular(20.0),
-                                  bottomLeft: Radius.circular(0.0),
-                                  bottomRight: Radius.circular(0.0),
-                                ),
-                                gradient: LinearGradient(
-                                  begin: Alignment.topRight,
-                                  end: Alignment.bottomLeft,
-                                  colors: [MyColors.color20, MyColors.color19],
-                                  stops: [0.3, 1.0], // 30% of the gradient is color20, 70% is color19
-                                ),
-                              ),
-                              child: Padding(
-                                padding: EdgeInsets.all(16.0),
-                                child: Row(
-                                  children: [
-                                    Column(
-                                      // crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          'Total Balance',
-                                          style: TextStyle(
-                                            fontSize: 15,
-                                            color: Colors.white,
-                                            fontFamily: 'CircularSpotifyTxT-Bold',
-                                          ),
-                                        ),
-                                        SizedBox(height:pH*0.0056),
-                                        Text(
-                                          '\$ ${userdatbject!.balance.toString()}',
-                                          style: TextStyle(
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.white,
-                                            fontFamily: 'CircularSpotifyTxT-Bold',
-                                          ),
-                                        ),
-                                        // SizedBox(height: 16),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ),
+                    child: Column(
+                      children: [
+                        AppBar(
+                          shadowColor: Colors.transparent,
+                          backgroundColor: Colors.transparent,
+                          leading: IconButton(
+                            onPressed: () {
+                              if (ZoomDrawer.of(context)!.isOpen()) {
+                                ZoomDrawer.of(context)!.close();
+                              } else {
+                                ZoomDrawer.of(context)!.open();
+                              }
+                            },
+                            icon: SvgPicture.asset('assets/Drawer.svg'),
+                            style: ButtonStyle(
+                              overlayColor: MaterialStateProperty.all(Colors.transparent),
+                              splashFactory: NoSplash.splashFactory,
                             ),
-                            Container(
-                              height: pH*0.11,
-                              width: double.infinity,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(0.0),
-                                  topRight: Radius.circular(0.0),
-                                  bottomLeft: Radius.circular(20.0),
-                                  bottomRight: Radius.circular(20.0),
-                                ),
-                                color: MyColors.color2,
-                              ),
-                              child: Padding(
-                                padding: EdgeInsets.fromLTRB(16,16,16,16.0),
-                                child: Row(
-                                  children: [
-                                    Column(
-                                      // mainAxisAlignment: MainAxisAlignment.start,
-                                      // crossAxisAlignment: CrossAxisAlignment.stretch,
+                          ),
+                          centerTitle: false,
+                          title: Text(
+                            'Portfolio',
+                            style: TextStyle(
+                              fontSize: 24.0,
+                              color: Colors.white,
+                              fontFamily: 'CircularSpotifyTxT-Bold',
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Container(
+                            width: double.infinity,
+                            child: Column(
+                              children: [
+                                Container(
+                                  height:pH*0.120,
+                                  width: double.infinity,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(20.0),
+                                      topRight: Radius.circular(20.0),
+                                      bottomLeft: Radius.circular(0.0),
+                                      bottomRight: Radius.circular(0.0),
+                                    ),
+                                    gradient: LinearGradient(
+                                      begin: Alignment.topRight,
+                                      end: Alignment.bottomLeft,
+                                      colors: [MyColors.color20, MyColors.color19],
+                                      stops: [0.3, 1.0], // 30% of the gradient is color20, 70% is color19
+                                    ),
+                                  ),
+                                  child: Padding(
+                                    padding: EdgeInsets.all(16.0),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       children: [
-                                        Text(
-                                          // textAlign: TextAlign.left,
-                                          'Profit',
-                                          style: TextStyle(color: Colors.green,fontFamily: 'CircularSpotifyTxT-Bold',),
+                                        Column(
+                                          // crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              'Total Balance',
+                                              style: TextStyle(
+                                                fontSize: 15,
+                                                color: Colors.white,
+                                                fontFamily: 'CircularSpotifyTxT-Bold',
+                                              ),
+                                            ),
+                                            SizedBox(height:pH*0.0056),
+                                            Text(
+                                              '\$ ${userdatbject!.balance.toString()}',
+                                              style: TextStyle(
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.white,
+                                                fontFamily: 'CircularSpotifyTxT-Bold',
+                                              ),
+                                            ),
+                                            // SizedBox(height: 16),
+                                          ],
                                         ),
-                                        SizedBox(
-                                          height: pH*0.0056,
-                                        ),
-                                        Text(
-                                          // textAlign: TextAlign.left,
-                                          '\$13250.00',
-                                          style: TextStyle(color: Colors.white,fontFamily: 'CircularSpotifyTxT-Bold',),
+                                        Container(
+                                          child: ClipOval(
+                                            child: Row(
+                                              children: [
+                                                SvgPicture.asset('assets/prof.svg'),
+                                                SizedBox(width: pW * 0.005),
+                                                Text(
+                                                  '0 %',
+                                                  style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 12,
+                                                    fontFamily: 'Gilroy-Medium',
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          decoration: BoxDecoration(
+                                            color: MyColors.color24,
+                                            borderRadius: BorderRadius.circular(10.0), // Set your desired border radius
+                                          ),
                                         ),
                                       ],
                                     ),
-                                  ],
+                                  ),
                                 ),
-                              ),
-                            )
-                          ],
+                                Container(
+                                  height: pH*0.11,
+                                  width: double.infinity,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(0.0),
+                                      topRight: Radius.circular(0.0),
+                                      bottomLeft: Radius.circular(20.0),
+                                      bottomRight: Radius.circular(20.0),
+                                    ),
+                                    color: MyColors.color2,
+                                  ),
+                                  child: Padding(
+                                    padding: EdgeInsets.fromLTRB(16,16,16,16.0),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Column(
+                                          // mainAxisAlignment: MainAxisAlignment.start,
+                                          // crossAxisAlignment: CrossAxisAlignment.stretch,
+                                          children: [
+                                            Text(
+                                              // textAlign: TextAlign.left,
+                                              'Profit',
+                                              style: TextStyle(color: Colors.green,fontFamily: 'CircularSpotifyTxT-Bold',),
+                                            ),
+                                            SizedBox(
+                                              height: pH*0.0056,
+                                            ),
+                                            Text(
+                                              // textAlign: TextAlign.left,
+                                              '\$13250.00',
+                                              style: TextStyle(color: Colors.white,fontFamily: 'CircularSpotifyTxT-Bold',),
+                                            ),
+                                          ],
+                                        ),
+                                        Row(
+                                            children:[
+                                              SvgPicture.asset('assets/prof.svg'),
+                                              SizedBox(width: pW*0.005,),
+                                              Text(
+                                                '0 %',
+                                                style:TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 12,
+                                                  fontFamily: 'Gilroy-Medium',
+                                                ),
+                                              ),
+                                            ]
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
                         ),
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    top:pH*0.38,
-                    left:0,
-                    right:0,
-                    child: Padding(
-                      padding: EdgeInsets.fromLTRB(16,0,16,0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(16,0,16,0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                'My Stocks',
-                                style: TextStyle(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white,
-                                  fontFamily: 'CircularSpotifyTxT-Bold',
-                                ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    'My Stocks',
+                                    style: TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white,
+                                      fontFamily: 'CircularSpotifyTxT-Bold',
+                                    ),
+                                  ),
+                                  IconButton(
+                                    icon: SvgPicture.asset('assets/shorts.svg'),
+                                    onPressed: () {
+                                    },
+                                    style: ButtonStyle(
+                                      overlayColor: MaterialStateProperty.all(Colors.transparent),
+                                      splashFactory: NoSplash.splashFactory,
+                                    ),
+                                  ),
+                                ],
                               ),
-                              IconButton(
-                                icon: SvgPicture.asset('assets/shorts.svg'),
-                                onPressed: () {
-                                },
-                                style: ButtonStyle(
-                                  overlayColor: MaterialStateProperty.all(Colors.transparent),
-                                  splashFactory: NoSplash.splashFactory,
+                              Container(
+                                height: pH*0.47,
+                                // padding: EdgeInsets.fromLTRB(16,0,16,0),
+                                child: ListView.builder(
+                                  itemCount: stocksd.length,
+                                  itemBuilder: (context, index) {
+                                    final imageUrl = '/* Stock image URL */';
+                                    final stockName = stocksd[index].name.toString();
+                                    final currentPrice = stocksd[index].price.toString();
+                                    final change = 'Rs 134.25';
+                                    final shares='${stocksd[index].quantity.toString()} shares';
+
+                                    return ExpandableCard(
+                                      imageUrl: imageUrl,
+                                      stockName: stockName,
+                                      currentPrice: currentPrice,
+                                      change: change,
+                                      shares:shares,
+                                    );
+                                  },
                                 ),
                               ),
                             ],
                           ),
-                          Container(
-                            height: pH*0.47,
-                            // padding: EdgeInsets.fromLTRB(16,0,16,0),
-                            child: ListView.builder(
-                              itemCount: stocksd.length,
-                              itemBuilder: (context, index) {
-                                final imageUrl = '/* Stock image URL */';
-                                final stockName = stocksd[index].name.toString();
-                                final currentPrice = stocksd[index].price.toString();
-                                final change = 'Rs 134.25';
-                                final shares='${stocksd[index].quantity.toString()} shares';
-
-                                return ExpandableCard(
-                                  imageUrl: imageUrl,
-                                  stockName: stockName,
-                                  currentPrice: currentPrice,
-                                  change: change,
-                                  shares:shares,
-                                );
-                              },
-                            ),
-                          ),
-                        ],
-                      ),
-                    )
+                        )
+                      ],
+                    ),
                   ),
+                  // Positioned(
+                  //   top:pH*0.1,
+                  //   left:0,
+                  //   right:0,
+                  //   child: Padding(
+                  //     padding: const EdgeInsets.all(16.0),
+                  //     child: Container(
+                  //       width: double.infinity,
+                  //       child: Column(
+                  //         children: [
+                  //           Container(
+                  //             height:pH*0.120,
+                  //             width: double.infinity,
+                  //             decoration: BoxDecoration(
+                  //               borderRadius: BorderRadius.only(
+                  //                 topLeft: Radius.circular(20.0),
+                  //                 topRight: Radius.circular(20.0),
+                  //                 bottomLeft: Radius.circular(0.0),
+                  //                 bottomRight: Radius.circular(0.0),
+                  //               ),
+                  //               gradient: LinearGradient(
+                  //                 begin: Alignment.topRight,
+                  //                 end: Alignment.bottomLeft,
+                  //                 colors: [MyColors.color20, MyColors.color19],
+                  //                 stops: [0.3, 1.0], // 30% of the gradient is color20, 70% is color19
+                  //               ),
+                  //             ),
+                  //             child: Padding(
+                  //               padding: EdgeInsets.all(16.0),
+                  //               child: Row(
+                  //                 children: [
+                  //                   Column(
+                  //                     // crossAxisAlignment: CrossAxisAlignment.start,
+                  //                     children: [
+                  //                       Text(
+                  //                         'Total Balance',
+                  //                         style: TextStyle(
+                  //                           fontSize: 15,
+                  //                           color: Colors.white,
+                  //                           fontFamily: 'CircularSpotifyTxT-Bold',
+                  //                         ),
+                  //                       ),
+                  //                       SizedBox(height:pH*0.0056),
+                  //                       Text(
+                  //                         '\$ ${userdatbject!.balance.toString()}',
+                  //                         style: TextStyle(
+                  //                           fontSize: 20,
+                  //                           fontWeight: FontWeight.bold,
+                  //                           color: Colors.white,
+                  //                           fontFamily: 'CircularSpotifyTxT-Bold',
+                  //                         ),
+                  //                       ),
+                  //                       // SizedBox(height: 16),
+                  //                     ],
+                  //                   ),
+                  //                 ],
+                  //               ),
+                  //             ),
+                  //           ),
+                  //           Container(
+                  //             height: pH*0.11,
+                  //             width: double.infinity,
+                  //             decoration: BoxDecoration(
+                  //               borderRadius: BorderRadius.only(
+                  //                 topLeft: Radius.circular(0.0),
+                  //                 topRight: Radius.circular(0.0),
+                  //                 bottomLeft: Radius.circular(20.0),
+                  //                 bottomRight: Radius.circular(20.0),
+                  //               ),
+                  //               color: MyColors.color2,
+                  //             ),
+                  //             child: Padding(
+                  //               padding: EdgeInsets.fromLTRB(16,16,16,16.0),
+                  //               child: Row(
+                  //                 children: [
+                  //                   Column(
+                  //                     // mainAxisAlignment: MainAxisAlignment.start,
+                  //                     // crossAxisAlignment: CrossAxisAlignment.stretch,
+                  //                     children: [
+                  //                       Text(
+                  //                         // textAlign: TextAlign.left,
+                  //                         'Profit',
+                  //                         style: TextStyle(color: Colors.green,fontFamily: 'CircularSpotifyTxT-Bold',),
+                  //                       ),
+                  //                       SizedBox(
+                  //                         height: pH*0.0056,
+                  //                       ),
+                  //                       Text(
+                  //                         // textAlign: TextAlign.left,
+                  //                         '\$13250.00',
+                  //                         style: TextStyle(color: Colors.white,fontFamily: 'CircularSpotifyTxT-Bold',),
+                  //                       ),
+                  //                     ],
+                  //                   ),
+                  //                 ],
+                  //               ),
+                  //             ),
+                  //           )
+                  //         ],
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
+                  // Positioned(
+                  //   top:pH*0.38,
+                  //   left:0,
+                  //   right:0,
+                  //   child: Padding(
+                  //     padding: EdgeInsets.fromLTRB(16,0,16,0),
+                  //     child: Column(
+                  //       crossAxisAlignment: CrossAxisAlignment.start,
+                  //       children: [
+                  //         Row(
+                  //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //           children: [
+                  //             Text(
+                  //               'My Stocks',
+                  //               style: TextStyle(
+                  //                 fontSize: 15,
+                  //                 fontWeight: FontWeight.bold,
+                  //                 color: Colors.white,
+                  //                 fontFamily: 'CircularSpotifyTxT-Bold',
+                  //               ),
+                  //             ),
+                  //             IconButton(
+                  //               icon: SvgPicture.asset('assets/shorts.svg'),
+                  //               onPressed: () {
+                  //               },
+                  //               style: ButtonStyle(
+                  //                 overlayColor: MaterialStateProperty.all(Colors.transparent),
+                  //                 splashFactory: NoSplash.splashFactory,
+                  //               ),
+                  //             ),
+                  //           ],
+                  //         ),
+                  //         Container(
+                  //           height: pH*0.47,
+                  //           // padding: EdgeInsets.fromLTRB(16,0,16,0),
+                  //           child: ListView.builder(
+                  //             itemCount: stocksd.length,
+                  //             itemBuilder: (context, index) {
+                  //               final imageUrl = '/* Stock image URL */';
+                  //               final stockName = stocksd[index].name.toString();
+                  //               final currentPrice = stocksd[index].price.toString();
+                  //               final change = 'Rs 134.25';
+                  //               final shares='${stocksd[index].quantity.toString()} shares';
+                  //
+                  //               return ExpandableCard(
+                  //                 imageUrl: imageUrl,
+                  //                 stockName: stockName,
+                  //                 currentPrice: currentPrice,
+                  //                 change: change,
+                  //                 shares:shares,
+                  //               );
+                  //             },
+                  //           ),
+                  //         ),
+                  //       ],
+                  //     ),
+                  //   )
+                  // ),
                 ],
               ),
             );

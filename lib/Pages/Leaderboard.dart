@@ -66,7 +66,7 @@ class _LeaderboardState extends State<Leaderboard> {
         future:fetchLeaderboard(),
       builder: (context,snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return Loading();
+          return Center(child: CircularProgressIndicator());
         } else if (snapshot.hasError) {
           return Text('Error: ${snapshot.error}');
         } else {
@@ -94,35 +94,39 @@ class _LeaderboardState extends State<Leaderboard> {
                   top: 0,
                   left: 0,
                   right: 0,
-                  child: AppBar(
-                      shadowColor: Colors.transparent,
-                      backgroundColor: Colors.transparent,
-                      leading: IconButton(
-                        onPressed: () {
-                          if (ZoomDrawer.of(context)!.isOpen()) {
-                            ZoomDrawer.of(context)!.close();
-                          } else {
-                            ZoomDrawer.of(context)!.open();
-                          }
-                        },
-                        icon: SvgPicture.asset('assets/Drawer.svg'),
-                        style: ButtonStyle(
-                          overlayColor: MaterialStateProperty.all(Colors.transparent),
-                          splashFactory: NoSplash.splashFactory,
-                        ),
-                      ),
-                      //centerTitle: true,
-                      title: Text(
-                        'Leaderboard',
-                        style: TextStyle(
-                          color: Color(0xFFF5F5F5),
-                          fontSize: 24,
-                          fontFamily: 'Gilroy-ExtraBold',
-                          fontWeight: FontWeight.w600,
-                          height: 0,
-                          letterSpacing: 0.48,
-                        ),
-                      )),
+                  child: Column(
+                    children: [
+                      AppBar(
+                          shadowColor: Colors.transparent,
+                          backgroundColor: Colors.transparent,
+                          leading: IconButton(
+                            onPressed: () {
+                              if (ZoomDrawer.of(context)!.isOpen()) {
+                                ZoomDrawer.of(context)!.close();
+                              } else {
+                                ZoomDrawer.of(context)!.open();
+                              }
+                            },
+                            icon: SvgPicture.asset('assets/Drawer.svg'),
+                            style: ButtonStyle(
+                              overlayColor: MaterialStateProperty.all(Colors.transparent),
+                              splashFactory: NoSplash.splashFactory,
+                            ),
+                          ),
+                          //centerTitle: true,
+                          title: Text(
+                            'Leaderboard',
+                            style: TextStyle(
+                              color: Color(0xFFF5F5F5),
+                              fontSize: 24,
+                              fontFamily: 'Gilroy-ExtraBold',
+                              fontWeight: FontWeight.w600,
+                              height: 0,
+                              letterSpacing: 0.48,
+                            ),
+                          )),
+                    ],
+                  ),
                 ),
                 Column(
                   children: [

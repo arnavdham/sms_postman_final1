@@ -45,6 +45,7 @@ Future fetchLeaderboard() async {
     if (response.body != null && response.body.isNotEmpty) {
       List<dynamic> jsonData = json.decode(response.body);
       leader = jsonData.map((data) => LeaderBoarData.fromJson(data)).toList();
+      // print(response.body);
     } else {
       print("Response body is null or empty.");
     }
