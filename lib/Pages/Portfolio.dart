@@ -64,14 +64,12 @@ class _PortfolioState extends State<Portfolio> {
   void initState() {
     super.initState();
     fetchStocks();
+    fetchMarketStatus();
   }
   @override
   Widget build(BuildContext context) {
     double pW = MediaQuery.of(context).size.width;
     double pH = MediaQuery.of(context).size.height;
-    // return Scaffold(
-    //   backgroundColor: Colors.yellow,
-    // );
     return FutureBuilder(
         future:fetchUser(),
         builder: (context,snapshot) {
@@ -174,7 +172,7 @@ class _PortfolioState extends State<Portfolio> {
                                             ),
                                             SizedBox(height:pH*0.0056),
                                             Text(
-                                              '\$ ${userdatbject!.balance.toString()}',
+                                              '\$ ${userdatbject!.balance.toString()}.00',
                                               style: TextStyle(
                                                 fontSize: 20,
                                                 fontWeight: FontWeight.bold,
@@ -203,7 +201,7 @@ class _PortfolioState extends State<Portfolio> {
                                             ),
                                           ),
                                           decoration: BoxDecoration(
-                                            color: MyColors.color24,
+                                            // color: MyColors.color24,
                                             borderRadius: BorderRadius.circular(10.0), // Set your desired border radius
                                           ),
                                         ),
@@ -308,13 +306,14 @@ class _PortfolioState extends State<Portfolio> {
                                     final currentPrice = stocksd[index].price.toString();
                                     final change = 'Rs 134.25';
                                     final shares='${stocksd[index].quantity.toString()} shares';
-
+                                    final id=stocksd[index].id.toString();
                                     return ExpandableCard(
                                       imageUrl: imageUrl,
                                       stockName: stockName,
                                       currentPrice: currentPrice,
                                       change: change,
                                       shares:shares,
+                                      id:id,
                                     );
                                   },
                                 ),
@@ -325,167 +324,6 @@ class _PortfolioState extends State<Portfolio> {
                       ],
                     ),
                   ),
-                  // Positioned(
-                  //   top:pH*0.1,
-                  //   left:0,
-                  //   right:0,
-                  //   child: Padding(
-                  //     padding: const EdgeInsets.all(16.0),
-                  //     child: Container(
-                  //       width: double.infinity,
-                  //       child: Column(
-                  //         children: [
-                  //           Container(
-                  //             height:pH*0.120,
-                  //             width: double.infinity,
-                  //             decoration: BoxDecoration(
-                  //               borderRadius: BorderRadius.only(
-                  //                 topLeft: Radius.circular(20.0),
-                  //                 topRight: Radius.circular(20.0),
-                  //                 bottomLeft: Radius.circular(0.0),
-                  //                 bottomRight: Radius.circular(0.0),
-                  //               ),
-                  //               gradient: LinearGradient(
-                  //                 begin: Alignment.topRight,
-                  //                 end: Alignment.bottomLeft,
-                  //                 colors: [MyColors.color20, MyColors.color19],
-                  //                 stops: [0.3, 1.0], // 30% of the gradient is color20, 70% is color19
-                  //               ),
-                  //             ),
-                  //             child: Padding(
-                  //               padding: EdgeInsets.all(16.0),
-                  //               child: Row(
-                  //                 children: [
-                  //                   Column(
-                  //                     // crossAxisAlignment: CrossAxisAlignment.start,
-                  //                     children: [
-                  //                       Text(
-                  //                         'Total Balance',
-                  //                         style: TextStyle(
-                  //                           fontSize: 15,
-                  //                           color: Colors.white,
-                  //                           fontFamily: 'CircularSpotifyTxT-Bold',
-                  //                         ),
-                  //                       ),
-                  //                       SizedBox(height:pH*0.0056),
-                  //                       Text(
-                  //                         '\$ ${userdatbject!.balance.toString()}',
-                  //                         style: TextStyle(
-                  //                           fontSize: 20,
-                  //                           fontWeight: FontWeight.bold,
-                  //                           color: Colors.white,
-                  //                           fontFamily: 'CircularSpotifyTxT-Bold',
-                  //                         ),
-                  //                       ),
-                  //                       // SizedBox(height: 16),
-                  //                     ],
-                  //                   ),
-                  //                 ],
-                  //               ),
-                  //             ),
-                  //           ),
-                  //           Container(
-                  //             height: pH*0.11,
-                  //             width: double.infinity,
-                  //             decoration: BoxDecoration(
-                  //               borderRadius: BorderRadius.only(
-                  //                 topLeft: Radius.circular(0.0),
-                  //                 topRight: Radius.circular(0.0),
-                  //                 bottomLeft: Radius.circular(20.0),
-                  //                 bottomRight: Radius.circular(20.0),
-                  //               ),
-                  //               color: MyColors.color2,
-                  //             ),
-                  //             child: Padding(
-                  //               padding: EdgeInsets.fromLTRB(16,16,16,16.0),
-                  //               child: Row(
-                  //                 children: [
-                  //                   Column(
-                  //                     // mainAxisAlignment: MainAxisAlignment.start,
-                  //                     // crossAxisAlignment: CrossAxisAlignment.stretch,
-                  //                     children: [
-                  //                       Text(
-                  //                         // textAlign: TextAlign.left,
-                  //                         'Profit',
-                  //                         style: TextStyle(color: Colors.green,fontFamily: 'CircularSpotifyTxT-Bold',),
-                  //                       ),
-                  //                       SizedBox(
-                  //                         height: pH*0.0056,
-                  //                       ),
-                  //                       Text(
-                  //                         // textAlign: TextAlign.left,
-                  //                         '\$13250.00',
-                  //                         style: TextStyle(color: Colors.white,fontFamily: 'CircularSpotifyTxT-Bold',),
-                  //                       ),
-                  //                     ],
-                  //                   ),
-                  //                 ],
-                  //               ),
-                  //             ),
-                  //           )
-                  //         ],
-                  //       ),
-                  //     ),
-                  //   ),
-                  // ),
-                  // Positioned(
-                  //   top:pH*0.38,
-                  //   left:0,
-                  //   right:0,
-                  //   child: Padding(
-                  //     padding: EdgeInsets.fromLTRB(16,0,16,0),
-                  //     child: Column(
-                  //       crossAxisAlignment: CrossAxisAlignment.start,
-                  //       children: [
-                  //         Row(
-                  //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  //           children: [
-                  //             Text(
-                  //               'My Stocks',
-                  //               style: TextStyle(
-                  //                 fontSize: 15,
-                  //                 fontWeight: FontWeight.bold,
-                  //                 color: Colors.white,
-                  //                 fontFamily: 'CircularSpotifyTxT-Bold',
-                  //               ),
-                  //             ),
-                  //             IconButton(
-                  //               icon: SvgPicture.asset('assets/shorts.svg'),
-                  //               onPressed: () {
-                  //               },
-                  //               style: ButtonStyle(
-                  //                 overlayColor: MaterialStateProperty.all(Colors.transparent),
-                  //                 splashFactory: NoSplash.splashFactory,
-                  //               ),
-                  //             ),
-                  //           ],
-                  //         ),
-                  //         Container(
-                  //           height: pH*0.47,
-                  //           // padding: EdgeInsets.fromLTRB(16,0,16,0),
-                  //           child: ListView.builder(
-                  //             itemCount: stocksd.length,
-                  //             itemBuilder: (context, index) {
-                  //               final imageUrl = '/* Stock image URL */';
-                  //               final stockName = stocksd[index].name.toString();
-                  //               final currentPrice = stocksd[index].price.toString();
-                  //               final change = 'Rs 134.25';
-                  //               final shares='${stocksd[index].quantity.toString()} shares';
-                  //
-                  //               return ExpandableCard(
-                  //                 imageUrl: imageUrl,
-                  //                 stockName: stockName,
-                  //                 currentPrice: currentPrice,
-                  //                 change: change,
-                  //                 shares:shares,
-                  //               );
-                  //             },
-                  //           ),
-                  //         ),
-                  //       ],
-                  //     ),
-                  //   )
-                  // ),
                 ],
               ),
             );
@@ -501,13 +339,14 @@ class ExpandableCard extends StatefulWidget {
   final String currentPrice;
   final String change;
   final String shares;
-
+  final String id;
   ExpandableCard({
     required this.imageUrl,
     required this.stockName,
     required this.currentPrice,
     required this.change,
     required this.shares,
+    required this.id,
   });
 
   @override
@@ -533,11 +372,13 @@ class _ExpandableCardState extends State<ExpandableCard> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => ExpandableCardView(
+                  builder: (context) => ExpandableView(
                     imageUrl: widget.imageUrl,
                     stockName: widget.stockName,
                     currentPrice: widget.currentPrice,
                     change: widget.change,
+                    id:widget.id,
+                    shares:widget.shares,
                   ),
                 ),
               );
@@ -577,7 +418,7 @@ class _ExpandableCardState extends State<ExpandableCard> {
                   child: Column(
                     children: [
                       Text(
-                        widget.currentPrice,
+                        widget.currentPrice as String,
                         style: TextStyle(
                           fontSize: 15,
                           color: Colors.red,
@@ -601,24 +442,160 @@ class _ExpandableCardState extends State<ExpandableCard> {
     );
   }
 }
-class ExpandableCardView extends StatefulWidget {
+class ExpandableView extends StatefulWidget {
   final String imageUrl;
   final String stockName;
   final String currentPrice;
   final String change;
-  ExpandableCardView({required this.imageUrl,
+  final String id;
+  final String shares;
+  ExpandableView({
+    required this.imageUrl,
     required this.stockName,
     required this.currentPrice,
-    required this.change,});
+    required this.change,
+    required this.id,
+    required this.shares,
+  });
 
   @override
-  State<ExpandableCardView> createState() => _ExpandableCardViewState();
+  State<ExpandableView> createState() => _ExpandableViewState();
 }
 
-class _ExpandableCardViewState extends State<ExpandableCardView> {
+class _ExpandableViewState extends State<ExpandableView> {
   bool isStarPressed = false;
+  final TextEditingController quantityController = TextEditingController();
+  final TextEditingController priceController = TextEditingController();
+  int totalPrice=0;
+  void updateTotalPrice() {
+    // Update total price based on quantity and current price
+    setState(() {
+      totalPrice = int.parse(widget.currentPrice) * int.parse(quantityController.text);
+    });
+  }
+  void _showBuyDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(widget.stockName),
+          content: Container(
+            height: MediaQuery.of(context).size.height * 0.2,
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  TextField(
+                    controller: quantityController,
+                    decoration: InputDecoration(labelText: 'Quantity'),
+                    keyboardType: TextInputType.number,
+                    onChanged: (value) {
+                      updateTotalPrice();
+                    },
+                  ),
+                  SizedBox(height: MediaQuery.of(context).size.height*0.05,),
+                  Row(
+                    children: [
+                      Text(
+                        'Total price : ',
+                      ),
+                      Text(
+                        totalPrice.toString(),
+                      )
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // Close the dialog
+              },
+              child: Text('Cancel'),
+            ),
+            Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                color: Colors.green,
+              ),
+              child: TextButton(
+                onPressed: () {
+                  int qunatitynu=int.parse(quantityController.text);
+                  sendMarketBuy(widget.id, qunatitynu,int.parse(widget.currentPrice));
+                  quantityController.clear();
+                  Navigator.of(context).pop();
+                },
+                child: Text('Buy'),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+  void _showSellDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(widget.stockName),
+          content: Container(
+            height: MediaQuery.of(context).size.height * 0.2,
+            child: Column(
+              children: [
+                TextField(
+                  controller: quantityController,
+                  decoration: InputDecoration(labelText: 'Quantity'),
+                  keyboardType: TextInputType.number,
+                  onChanged: (value) {
+                    updateTotalPrice();
+                  },
+                ),
+                SizedBox(height: MediaQuery.of(context).size.height*0.05,),
+                Row(
+                  children: [
+                    Text(
+                      'Total price : ',
+                    ),
+                    Text(
+                      totalPrice.toString(),
+                    )
+                  ],
+                ),
+              ],
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // Close the dialog
+              },
+              child: Text('Cancel'),
+            ),
+            Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                color: Colors.red,
+              ),
+              child: TextButton(
+                onPressed: () {
+                  int qunatitynu=int.parse(quantityController.text);
+                  sellMarket(widget.id, qunatitynu,int.parse(widget.currentPrice));
+                  quantityController.clear();
+                  Navigator.of(context).pop();
+                },
+                child: Text('Sell'),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
   @override
   Widget build(BuildContext context) {
+    TextEditingController _textFieldController = TextEditingController();
     double pW = MediaQuery.of(context).size.width;
     double pH = MediaQuery.of(context).size.height;
     return Scaffold(
@@ -658,6 +635,7 @@ class _ExpandableCardViewState extends State<ExpandableCardView> {
                 ),
                 title: Text(
                   widget.stockName,
+                  // widget.stockName,
                   style: TextStyle(color: Colors.white),
                 ),
                 actions: [
@@ -695,7 +673,9 @@ class _ExpandableCardViewState extends State<ExpandableCardView> {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           ElevatedButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                _showSellDialog();
+                              },
                               style: ButtonStyle(
                                   elevation: MaterialStatePropertyAll<double?>(5.0),
                                   backgroundColor:
@@ -709,7 +689,14 @@ class _ExpandableCardViewState extends State<ExpandableCardView> {
                                 style: TextStyle(color: Color(0xff841C22)),
                               )),
                           ElevatedButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                _showBuyDialog();
+                                // sendMarketBuy(widget.id, 5,10);
+                                // print(widget.id);
+                                // print(widget.currentPrice);
+                                // print(widget.shares);
+                                // sellMarket(widget.id,1, 10);
+                              },
                               style: ButtonStyle(
                                 elevation: MaterialStatePropertyAll<double?>(5.0),
                                 backgroundColor:
