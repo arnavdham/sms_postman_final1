@@ -478,33 +478,31 @@ class _ExpandableViewState extends State<ExpandableView> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text(widget.stockName),
+          title: Text('${widget.stockName}  - ${widget.currentPrice}'),
           content: Container(
             height: MediaQuery.of(context).size.height * 0.2,
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  TextField(
-                    controller: quantityController,
-                    decoration: InputDecoration(labelText: 'Quantity'),
-                    keyboardType: TextInputType.number,
-                    onChanged: (value) {
-                      updateTotalPrice();
-                    },
-                  ),
-                  SizedBox(height: MediaQuery.of(context).size.height*0.05,),
-                  Row(
-                    children: [
-                      Text(
-                        'Total price : ',
-                      ),
-                      Text(
-                        totalPrice.toString(),
-                      )
-                    ],
-                  ),
-                ],
-              ),
+            child: Column(
+              children: [
+                TextField(
+                  controller: quantityController,
+                  decoration: InputDecoration(labelText: 'Quantity'),
+                  keyboardType: TextInputType.number,
+                  onChanged: (value) {
+                    updateTotalPrice();
+                  },
+                ),
+                SizedBox(height: MediaQuery.of(context).size.height*0.05,),
+                Row(
+                  children: [
+                    Text(
+                      'Total price : ',
+                    ),
+                    Text(
+                      totalPrice.toString(),
+                    )
+                  ],
+                ),
+              ],
             ),
           ),
           actions: [
@@ -539,7 +537,9 @@ class _ExpandableViewState extends State<ExpandableView> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text(widget.stockName),
+          title: Text(
+              '${widget.stockName}  - ${widget.currentPrice}'
+          ),
           content: Container(
             height: MediaQuery.of(context).size.height * 0.2,
             child: Column(
@@ -599,6 +599,7 @@ class _ExpandableViewState extends State<ExpandableView> {
     double pW = MediaQuery.of(context).size.width;
     double pH = MediaQuery.of(context).size.height;
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: Colors.black,
       body:  Container(
         height: pH,
