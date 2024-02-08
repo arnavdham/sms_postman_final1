@@ -110,36 +110,113 @@ class _DrawerScreensState extends State<DrawerScreens> {
                 child: Image.asset('assets/bg2.png'),
               ),
             ),
-            Positioned(
-              top: 0,
-              left: 0,
-              right: 0,
-              child: AppBar(
-                shadowColor: Colors.transparent,
-                backgroundColor: Colors.transparent,
-                centerTitle: false,
-                title: Text(
-                  'Stock Market Simulation',
-                  style: TextStyle(
-                    fontSize: 24.0,
-                    color: Colors.white,
-                    fontFamily: 'CircularSpotifyTxT-Bold',
-                  ),
-                ),
-              ),
-            ),
             Padding(
-              padding: EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 8.0),
+              padding: EdgeInsets.fromLTRB(16.0, 8.0,16.0, 8.0),
               child: Column(
                 children: [
                   SizedBox(
                     height: pH * 0.1,
                   ),
-                  Center(
-                    child: ElevatedButton(
-                      onPressed: googleLogin,
-                      child: Text('Sign In'),
+                  Container(
+                    width: pW*0.74,
+                    child: Text(
+                      'Welcome To',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 40,
+                        fontFamily: 'Gilroy-Medium',
+                        fontWeight: FontWeight.w700,
+                      ),
                     ),
+                  ),
+                  Container(
+                    width: pW*0.74,
+                    child: Text(
+                      'SMS!',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 40,
+                        fontFamily: 'Gilroy-Medium',
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: pH*0.025,),
+                  Container(
+                    width: pW*0.74,
+                    child: Text(
+                      'Unleash Your Potential: Sign up and Trade with Confidence',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 18,
+                        fontStyle: FontStyle.italic,
+                        fontFamily: 'Inter',
+                        fontWeight: FontWeight.w200,
+                        height: 0,
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: pH*0.15,),
+                  Container(
+                    child: Align(
+                      alignment: Alignment.center,
+                      child: Column(
+                        children: [
+                          Container(
+                            width: pW*0.75,
+                            height: pH*0.075,
+                            decoration: ShapeDecoration(
+                              color: Color(0xFF2D1450),
+                              shape: RoundedRectangleBorder(
+                                side: BorderSide(width: 1, color: Color(0xFF5B1BA9)),
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                            ),
+                            child: Align(
+                              alignment: Alignment.center,
+                              child: TextButton(
+                                child: Text(
+                                  'Sign up',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 20,
+                                    fontFamily: 'Inter',
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ),
+                                onPressed: googleLogin,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Already have an account?',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 15,
+                          fontFamily: 'Inter',
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                      TextButton(
+                        onPressed:googleLogin,
+                        child: Text(
+                          'Login',
+                          style: TextStyle(
+                            color: Color(0xFF5B1BA9),
+                            fontSize: 15,
+                            fontFamily: 'Inter',
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),

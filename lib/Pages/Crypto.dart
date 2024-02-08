@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:sms_postman/Pages/Portfolio.dart';
-import '../Services/Colors.dart';
-import 'package:sizer/sizer.dart';
+import 'Loading.dart';
 import 'dart:ui';
 
 class Crypto extends StatefulWidget {
@@ -15,12 +12,14 @@ class Crypto extends StatefulWidget {
 }
 
 class _CryptoState extends State<Crypto> {
-
   @override
   Widget build(BuildContext context) {
     double pW = MediaQuery.of(context).size.width;
     double pH = MediaQuery.of(context).size.height;
-    return Scaffold(
+    bool load = false;
+    return (load)
+        ? Loading()
+        : Scaffold(
       backgroundColor: Colors.black,
       body: Container(
         height: pH,
@@ -50,16 +49,7 @@ class _CryptoState extends State<Crypto> {
               child: AppBar(
                 shadowColor: Colors.transparent,
                 backgroundColor: Colors.transparent,
-                leading: IconButton(
-                  onPressed: () {
-                    if (ZoomDrawer.of(context)!.isOpen()) {
-                      ZoomDrawer.of(context)!.close();
-                    } else {
-                      ZoomDrawer.of(context)!.open();
-                    }
-                  },
-                  icon: SvgPicture.asset('assets/Drawer.svg'),
-                ),
+                iconTheme: IconThemeData(color: Colors.white),
                 centerTitle: false,
                 title: Text(
                   'Crypto',
@@ -72,43 +62,119 @@ class _CryptoState extends State<Crypto> {
               ),
             ),
             Padding(
-              padding: EdgeInsets.fromLTRB(8.0,8.0,8.0,8.0),
+              padding: EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 8.0),
               child: Column(
                 children: [
                   SizedBox(
                     height: pH * 0.1,
                   ),
-                  Container(
-                    padding: EdgeInsets.only(left: pH*0.02),
-                    width: pW*0.5,
-                    child: Text(
-                      'Trending Crypto',
-                      style: TextStyle(
-                        fontSize: 20,
-                        color: Colors.white,
-                        fontFamily: 'CircularSpotifyTxT-Bold',
-                      ),
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Trending Crypto',
+                          style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white),
+                        ),
+                        SizedBox(height: 16),
+                        Row(
+                          children: [
+                            Container(
+                              height: pH * 0.2,
+                              width: pW * 0.41,
+                              child: CryptoCard(
+                                imagePath: 'assets/ethereum.png',
+                                name: 'Etherium',
+                                price: '13.99',
+                              ),
+                            ),
+                            SizedBox(width: 16),
+                            Container(
+                              height: pH * 0.2,
+                              width: pW * 0.41,
+                              child: CryptoCard(
+                                imagePath: 'assets/ethereum.png',
+                                name: 'Bitcoin',
+                                price: '1569',
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 10),
+                      ],
                     ),
                   ),
+                  SizedBox(
+                    height: pH * 0.03,
+                  ),
+                  Row(
+                    children: [
+                      SizedBox(width: pW*0.03,),
+                      Align(
+                        alignment: Alignment.topLeft,
+                        child: Text(
+                          'Market Statistics',
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Colors.white,
+                            fontFamily: 'CircularSpotifyTxT-Bold',
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: pH * 0.03,
+                  ),
                   Container(
-                    // color: MyColors.color11,
-                    child: Image.asset(
-                      'assets/ethereum.png',
-                      // color: MyColors.color11,
+                    width: pW * 0.95,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: Colors.transparent,
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Container(
+                          width: pW*0.3,
+                          height: pH*0.05,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: Color(0xFF221E42),
+                          ),
+                          child: TextButton(
+                              onPressed: () {},
+                              child: Text('Explore', style: TextStyle(color: Colors.white),)),
+                        ),Container(
+                          width: pW*0.3,
+                          height: pH*0.05,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: Color(0xFF221E42),
+                          ),
+                          child: TextButton(
+                              onPressed: () {},
+                              child: Text('Top Gainers', style: TextStyle(color: Colors.white),)),
+                        ),Container(
+                          width: pW*0.3,
+                          height: pH*0.05,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: Color(0xFF221E42),
+                          ),
+                          child: TextButton(
+                              onPressed: () {},
+                              child: Text('Top Losers', style: TextStyle(color: Colors.white),)),
+                        ),
+                      ],
                     ),
                   ),
-                  SizedBox(height: pH*0.011,),
-                  Container(
-                    padding: EdgeInsets.only(left: pH*0.02),
-                    width: pW*0.5,
-                    child: Text(
-                      'Market Statistics',
-                      style: TextStyle(
-                        fontSize: 20,
-                        color: Colors.white,
-                        fontFamily: 'CircularSpotifyTxT-Bold',
-                      ),
-                    ),
+                  SizedBox(
+                    height: pH * 0.012,
                   ),
                 ],
               ),
@@ -118,4 +184,89 @@ class _CryptoState extends State<Crypto> {
       ),
     );
   }
+}
+
+class CryptoCard extends StatelessWidget {
+  final String imagePath;
+  final String name;
+  final String price;
+
+  const CryptoCard({
+    required this.imagePath,
+    required this.name,
+    required this.price,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+        color: Color(0xFF221E42),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15),
+        ),
+        child: Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    Image.asset(
+                      imagePath,
+                      width: 50,
+                      height: 50,
+                    ),
+                    SizedBox(width: 5),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          name,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Text(
+                          price,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 14,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                Row(
+                  children: [
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.14,
+                    ),
+                    Container(
+                      padding: EdgeInsets.all(4),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Color(0xff5dc9e1).withOpacity(0.09),
+                      ),
+                      child: Text(
+                        '\$1569',
+                        style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 5,
+                ),
+                Image.asset('assets/graphloss.png')
+              ],
+            ),
+            ),
+        );
+    }
 }

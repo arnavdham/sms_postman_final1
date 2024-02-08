@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:sms_postman/Pages/Account.dart';
 import 'package:sms_postman/Services/ConstantFile.dart';
 import 'package:sms_postman/main.dart';
 import 'Colors.dart';
@@ -57,10 +58,10 @@ class _NavbarState extends State<Navbar> {
                               height: pH * 0.048,
                               decoration: BoxDecoration(
                                 border: Border.all(
-                                  color: MyColors.color18, // Replace with your desired border color
-                                  width: 2.0, // Adjust the width as needed
+                                  color: MyColors.color18,
+                                  width: 2.0,
                                 ),
-                                shape: BoxShape.circle, // This makes the container circular
+                                shape: BoxShape.circle,
                               ),
                               child: ClipOval(
                                 child: Container(
@@ -100,7 +101,10 @@ class _NavbarState extends State<Navbar> {
                             SizedBox(width: pW*0.05,),
                             TextButton(
                               onPressed:(){
-
+                                Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(builder: (context) => AccountPage()),
+                                );
                               },
                               child:Text(
                                 'Account',
