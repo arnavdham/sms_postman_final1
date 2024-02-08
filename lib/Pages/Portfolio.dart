@@ -464,138 +464,160 @@ class ExpandableView extends StatefulWidget {
 
 class _ExpandableViewState extends State<ExpandableView> {
   bool isStarPressed = false;
-  final TextEditingController quantityController = TextEditingController();
+  final TextEditingController _Controller = TextEditingController();
   final TextEditingController priceController = TextEditingController();
   int totalPrice=0;
-  void updateTotalPrice() {
-    // Update total price based on quantity and current price
-    setState(() {
-      totalPrice = int.parse(widget.currentPrice) * int.parse(quantityController.text);
-    });
-  }
+
+  // //void updateTotalPrice() {
+  //   // Update total price based on quantity and current price
+  //   setState(() {
+  //     int quantity = int.tryParse(_Controller.text) ?? 0;
+  //     totalPrice = int.parse(widget.currentPrice) * quantity;
+  //   });
+  // }
   void _showBuyDialog() {
+    TextEditingController _quantityController = TextEditingController();
+    int totalPrice = 0;
+
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('${widget.stockName}  - ${widget.currentPrice}'),
-          content: Container(
-            height: MediaQuery.of(context).size.height * 0.2,
-            child: Column(
-              children: [
-                TextField(
-                  controller: quantityController,
-                  decoration: InputDecoration(labelText: 'Quantity'),
-                  keyboardType: TextInputType.number,
-                  onChanged: (value) {
-                    updateTotalPrice();
-                  },
-                ),
-                SizedBox(height: MediaQuery.of(context).size.height*0.05,),
-                Row(
+        return StatefulBuilder(
+          builder: (context, setState) {
+            return AlertDialog(
+              title: Text('${widget.stockName}  - ${widget.currentPrice}'),
+              content: Container(
+                height: MediaQuery.of(context).size.height * 0.2,
+                child: Column(
                   children: [
-                    Text(
-                      'Total price : ',
+                    TextField(
+                      controller: _quantityController,
+                      decoration: InputDecoration(labelText: 'Quantity'),
+                      keyboardType: TextInputType.number,
+                      onChanged: (value) {
+                        setState(() {
+                          if (value.isNotEmpty) {
+                            int inputValue = int.parse(value);
+                            totalPrice = inputValue * int.parse(widget.currentPrice);
+                          } else {
+                            totalPrice = 0;
+                          }
+                        });
+                      },
                     ),
-                    Text(
-                      totalPrice.toString(),
-                    )
+                    SizedBox(height: MediaQuery.of(context).size.height * 0.05),
+                    Row(
+                      children: [
+                        Text('Total price : '),
+                        Text(totalPrice.toString()),
+                      ],
+                    ),
                   ],
                 ),
+              ),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop(); // Close the dialog
+                  },
+                  child: Text('Cancel'),
+                ),
+                Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    color: Colors.green,
+                  ),
+                  child: TextButton(
+                    onPressed: () {
+                      int quantity = int.tryParse(_quantityController.text) ?? 0;
+                      sendMarketBuy(widget.id, quantity, int.parse(widget.currentPrice));
+                      _quantityController.clear();
+                      Navigator.of(context).pop();
+                    },
+                    child: Text('Buy'),
+                  ),
+                ),
               ],
-            ),
-          ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop(); // Close the dialog
-              },
-              child: Text('Cancel'),
-            ),
-            Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                color: Colors.green,
-              ),
-              child: TextButton(
-                onPressed: () {
-                  int qunatitynu=int.parse(quantityController.text);
-                  sendMarketBuy(widget.id, qunatitynu,int.parse(widget.currentPrice));
-                  quantityController.clear();
-                  Navigator.of(context).pop();
-                },
-                child: Text('Buy'),
-              ),
-            ),
-          ],
+            );
+          },
         );
       },
     );
   }
+
   void _showSellDialog() {
+    TextEditingController _quantityController = TextEditingController();
+    int totalPrice = 0;
+
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text(
-              '${widget.stockName}  - ${widget.currentPrice}'
-          ),
-          content: Container(
-            height: MediaQuery.of(context).size.height * 0.2,
-            child: Column(
-              children: [
-                TextField(
-                  controller: quantityController,
-                  decoration: InputDecoration(labelText: 'Quantity'),
-                  keyboardType: TextInputType.number,
-                  onChanged: (value) {
-                    updateTotalPrice();
-                  },
-                ),
-                SizedBox(height: MediaQuery.of(context).size.height*0.05,),
-                Row(
+        return StatefulBuilder(
+          builder: (context, setState) {
+            return AlertDialog(
+              title: Text('${widget.stockName}  - ${widget.currentPrice}'),
+              content: Container(
+                height: MediaQuery.of(context).size.height * 0.2,
+                child: Column(
                   children: [
-                    Text(
-                      'Total price : ',
+                    TextField(
+                      controller: _quantityController,
+                      decoration: InputDecoration(labelText: 'Quantity'),
+                      keyboardType: TextInputType.number,
+                      onChanged: (value) {
+                        setState(() {
+                          if (value.isNotEmpty) {
+                            int inputValue = int.parse(value);
+                            totalPrice = inputValue * int.parse(widget.currentPrice);
+                          } else {
+                            totalPrice = 0;
+                          }
+                        });
+                      },
                     ),
-                    Text(
-                      totalPrice.toString(),
-                    )
+                    SizedBox(height: MediaQuery.of(context).size.height * 0.05),
+                    Row(
+                      children: [
+                        Text('Total price : '),
+                        Text(totalPrice.toString()),
+                      ],
+                    ),
                   ],
                 ),
+              ),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop(); // Close the dialog
+                  },
+                  child: Text('Cancel'),
+                ),
+                Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    color: Colors.red,
+                  ),
+                  child: TextButton(
+                    onPressed: () {
+                      int quantity = int.tryParse(_quantityController.text) ?? 0;
+                      sellMarket(widget.id, quantity, int.parse(widget.currentPrice));
+                      _quantityController.clear();
+                      Navigator.of(context).pop();
+                    },
+                    child: Text('Sell'),
+                  ),
+                ),
               ],
-            ),
-          ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop(); // Close the dialog
-              },
-              child: Text('Cancel'),
-            ),
-            Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                color: Colors.red,
-              ),
-              child: TextButton(
-                onPressed: () {
-                  int qunatitynu=int.parse(quantityController.text);
-                  sellMarket(widget.id, qunatitynu,int.parse(widget.currentPrice));
-                  quantityController.clear();
-                  Navigator.of(context).pop();
-                },
-                child: Text('Sell'),
-              ),
-            ),
-          ],
+            );
+          },
         );
       },
     );
   }
+
+
   @override
   Widget build(BuildContext context) {
-    TextEditingController _textFieldController = TextEditingController();
     double pW = MediaQuery.of(context).size.width;
     double pH = MediaQuery.of(context).size.height;
     return Scaffold(

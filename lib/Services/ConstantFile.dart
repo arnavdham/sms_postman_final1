@@ -147,13 +147,13 @@ Future sendMarketBuy(String stockId, int quantity, int price) async {
   );
   if (response.statusCode == 200) {
     if (response.body != null && response.body.isNotEmpty) {
-      print(response.body);
+      // print(response.body);
     } else {
       print("Response body is null or empty.");
     }
   } else {
     print("Failed to buy. Status code: ${response.statusCode}");
-    print(response.body);
+    // print(response.body);
   }
 }
 
