@@ -4,6 +4,7 @@ import 'package:sms_postman/models/NewsData.dart';
 import 'package:sms_postman/models/StocksData.dart';
 import 'package:sms_postman/Services/AccessTokensFunctions.dart';
 import 'package:http/http.dart' as http;
+import 'package:sms_postman/models/Trendsks.dart';
 import 'package:sms_postman/models/userdata.dart';
 String username='';
 List<Stocks> stocksd=[];
@@ -11,6 +12,7 @@ List<Newsd>newsList=[];
 List<UserProfile> userlist=[];
 UserProfile? userdatbject;
 List<LeaderBoarData> leader=[];
+List<trendingsks> trend=[];
 
 Future fetchStocks() async {
   final actok = await getAccessToken();
@@ -23,7 +25,7 @@ Future fetchStocks() async {
   );
   if (response.statusCode == 200) {
     if (response.body != null && response.body.isNotEmpty) {
-      print(response.body);
+      // print(response.body);
       List<dynamic> jsonData = json.decode(response.body);
       stocksd = jsonData.map((data) => Stocks.fromJson(data)).toList();
     } else {
@@ -93,7 +95,6 @@ Future fetchUser() async{
       if (jsonData is Map<String, dynamic>) {
         // print(response.body);
         userlist = [UserProfile.fromJson(jsonData)];
-
         userdatbject=userlist[0];
       } else {
         print("Invalid JSON format. Expected a Map.");
@@ -119,7 +120,7 @@ Future fetchMarketStatus() async{
     if (response.body != null && response.body.isNotEmpty) {
       dynamic jsonData = json.decode(response.body);
       if (jsonData is Map<String, dynamic>) {
-        print(response.body);
+        // print(response.body);
       } else {
         print("Invalid JSON format. Expected a Map.");
       }
@@ -173,7 +174,28 @@ Future sellMarket(String stockId, int quantity, int price) async {
   );
   if (response.statusCode == 200) {
     if (response.body != null && response.body.isNotEmpty) {
-      print(response.body);
+      // print(response.body);
+    } else {
+      print("Response body is null or empty.");
+    }
+  } else {
+    print("Failed to sell. Status code: ${response.statusCode}");
+  }
+}
+
+Future Trendingstks() async {
+  final actok = await getAccessToken();
+  final response = await http.get(
+    Uri.parse('https://smsapp.bits-postman-lab.in/stocks/trending'),
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': actok.toString(),
+    },
+  );
+  if (response.statusCode == 200) {
+    if (response.body != null && response.body.isNotEmpty) {
+      List<dynamic> jsonData = json.decode(response.body);
+      trend = jsonData.map((data) => trendingsks.fromJson(data)).toList();
     } else {
       print("Response body is null or empty.");
     }

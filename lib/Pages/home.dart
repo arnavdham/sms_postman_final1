@@ -4,6 +4,7 @@ import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sms_postman/Pages/Portfolio.dart';
 import 'package:sms_postman/Services/ConstantFile.dart';
+import 'package:sms_postman/models/Trendsks.dart';
 import '../Services/Colors.dart';
 import 'Crypto.dart';
 import 'Loading.dart';
@@ -750,46 +751,59 @@ class _HomeState extends State<Home> {
                                   height: pH * 0.14,
                                   width: double.infinity,
                                   color: Colors.transparent,
-                                  child: ListView(
-                                    scrollDirection: Axis.horizontal,
-                                    children: [
-                                      StockCard(
-                                        imageUrl: 'assets/share3.svg',
-                                        name: 'BRRI',
-                                        price: '8,600',
-                                        change: '+50(+3.23%)',
-                                      ),
-                                      StockCard(
-                                        imageUrl: 'assets/share3.svg',
-                                        name: 'ARB',
-                                        price: '\$90.00',
-                                        change: '-\$5.00',
-                                      ),
-                                      StockCard(
-                                        imageUrl: 'assets/share3.svg',
-                                        name: 'FSX',
-                                        price: '\$110.00',
-                                        change: '+\$15.00',
-                                      ),
-                                      StockCard(
-                                        imageUrl: 'assets/share3.svg',
-                                        name: 'Stock 4',
-                                        price: '\$110.00',
-                                        change: '-\$15.00',
-                                      ),
-                                      StockCard(
-                                        imageUrl: 'assets/share3.svg',
-                                        name: 'Stock 5',
-                                        price: '\$110.00',
-                                        change: '+\$15.00',
-                                      ),
-                                      StockCard(
-                                        imageUrl: 'assets/share3.svg',
-                                        name: 'Stock 6',
-                                        price: '\$110.00',
-                                        change: '\$0.00',
-                                      ),
-                                    ],
+                                  // child: ListView(
+                                  //   scrollDirection: Axis.horizontal,
+                                  //   children: [
+                                  //     StockCard(
+                                  //       imageUrl: 'assets/share3.svg',
+                                  //       name: 'BRRI',
+                                  //       price: '8,600',
+                                  //       change: '+50(+3.23%)',
+                                  //     ),
+                                  //     StockCard(
+                                  //       imageUrl: 'assets/share3.svg',
+                                  //       name: 'ARB',
+                                  //       price: '\$90.00',
+                                  //       change: '-\$5.00',
+                                  //     ),
+                                  //     StockCard(
+                                  //       imageUrl: 'assets/share3.svg',
+                                  //       name: 'FSX',
+                                  //       price: '\$110.00',
+                                  //       change: '+\$15.00',
+                                  //     ),
+                                  //     StockCard(
+                                  //       imageUrl: 'assets/share3.svg',
+                                  //       name: 'Stock 4',
+                                  //       price: '\$110.00',
+                                  //       change: '-\$15.00',
+                                  //     ),
+                                  //     StockCard(
+                                  //       imageUrl: 'assets/share3.svg',
+                                  //       name: 'Stock 5',
+                                  //       price: '\$110.00',
+                                  //       change: '+\$15.00',
+                                  //     ),
+                                  //     StockCard(
+                                  //       imageUrl: 'assets/share3.svg',
+                                  //       name: 'Stock 6',
+                                  //       price: '\$110.00',
+                                  //       change: '\$0.00',
+                                  //     ),
+                                  //   ],
+                                  // ),
+                                  child: ListView.builder(
+                                      scrollDirection: Axis.horizontal,
+                                      itemCount:trend.length,
+                                      itemBuilder:(BuildContext context,int index){
+                                        trendingsks item=trend[index];
+                                        return StockCard(
+                                          imageUrl: 'assets/share3.svg',
+                                          name: item.name ?? "",
+                                          price: item.price != null ? '${item.price.toString()}' : "",
+                                          change: '+\$15.00',
+                                        );
+                                      }
                                   ),
                                 ),
                               ],
@@ -852,7 +866,7 @@ class StockCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: MediaQuery.of(context).size.width*0.315,
+      width: MediaQuery.of(context).size.width*0.35,
       margin: EdgeInsets.all(MediaQuery.of(context).size.width*0.01),
       decoration: BoxDecoration(
         color: MyColors.color11,
@@ -870,37 +884,46 @@ class StockCard extends StatelessWidget {
                   width: MediaQuery.of(context).size.width*0.053,
                   height: MediaQuery.of(context).size.height*0.0232,
                 ),
-                SizedBox(width: 8),
-                Text(
-                  name,
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 14,
-                    fontFamily: 'CircularSpotifyTxT-Bold',
+                SizedBox(width: 4),
+                Container(
+                  width: MediaQuery.of(context).size.width*0.2,
+                  child: Text(
+                    name,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 14,
+                      fontFamily: 'CircularSpotifyTxT-Bold',
+                    ),
                   ),
                 ),
               ],
             ),
-            SizedBox(height: 10),
-            Text(
-              price,
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 16,
-                fontFamily: 'CircularSpotifyTxT-Bold',
+            SizedBox(height: 5),
+            Padding(
+              padding: EdgeInsets.fromLTRB(8, 0, 0, 0),
+              child: Text(
+                price,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 16,
+                  fontFamily: 'CircularSpotifyTxT-Bold',
+                ),
               ),
             ),
             SizedBox(height: 4),
-            Text(
-              change,
-              style: TextStyle(
-                color: change.startsWith('+')
-                    ? Colors.green
-                    : change.startsWith('-')
-                        ? Colors.red
-                        : Colors.white,
-                fontSize: 11,
-                fontFamily: 'CircularSpotifyTxT-Bold',
+            Padding(
+              padding: EdgeInsets.only(left:8.0),
+              child: Text(
+                change,
+                style: TextStyle(
+                  color: change.startsWith('+')
+                      ? Colors.green
+                      : change.startsWith('-')
+                          ? Colors.red
+                          : Colors.white,
+                  fontSize: 11,
+                  fontFamily: 'CircularSpotifyTxT-Bold',
+                ),
               ),
             ),
           ],

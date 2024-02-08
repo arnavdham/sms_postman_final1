@@ -65,6 +65,7 @@ class _PortfolioState extends State<Portfolio> {
     super.initState();
     fetchStocks();
     fetchMarketStatus();
+    Trendingstks();
   }
   @override
   Widget build(BuildContext context) {
@@ -392,15 +393,18 @@ class _ExpandableCardState extends State<ExpandableCard> {
                   width:MediaQuery.of(context).size.width*0.21,
                   child: Column(
                     children: [
-                      Text(
-                        widget.stockName,
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 15,
+                      Align(
+                        alignment: Alignment.topLeft,
+                        child: Text(
+                          widget.stockName,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 15,
+                          ),
                         ),
                       ),
                       Align(
-                        alignment: Alignment.centerLeft,
+                        alignment: Alignment.topLeft,
                         child: Text(
                           widget.shares,
                           style: TextStyle(
@@ -412,23 +416,35 @@ class _ExpandableCardState extends State<ExpandableCard> {
                     ],
                   ),
                 ),
-                Image.asset('assets/shareloss.png'),
+                Container(
+                  width: MediaQuery.of(context).size.width*0.2,
+                  height: MediaQuery.of(context).size.width*0.1,
+                  child: Image.asset(
+                      'assets/shareloss.png',
+                  ),
+                ),
                 Container(
                   width:MediaQuery.of(context).size.width*0.25,
                   child: Column(
                     children: [
-                      Text(
-                        widget.currentPrice as String,
-                        style: TextStyle(
-                          fontSize: 15,
-                          color: Colors.red,
+                      Align(
+                        alignment:Alignment.topLeft,
+                        child: Text(
+                          widget.currentPrice as String,
+                          style: TextStyle(
+                            fontSize: 15,
+                            color: Colors.red,
+                          ),
                         ),
                       ),
-                      Text(
-                        widget.change,
-                        style: TextStyle(
-                          fontSize: 12,
-                          color: Colors.white,
+                      Align(
+                        alignment:Alignment.topLeft,
+                        child: Text(
+                          widget.change,
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: Colors.white,
+                          ),
                         ),
                       ),
                     ],
