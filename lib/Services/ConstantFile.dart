@@ -158,6 +158,30 @@ Future sendMarketBuy(String stockId, int quantity, int price) async {
   }
 }
 
+Future sendIPOBuy(String stockId, int quantity) async {
+  final actok = await getAccessToken();
+  final response = await http.post(
+    Uri.parse('https://smsapp.bits-postman-lab.in/ipo/buy'),
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': actok.toString(),
+    },
+    body: jsonEncode(<String, dynamic>{
+      "stock": stockId,
+      "amount": quantity,
+    }),
+  );
+  if (response.statusCode == 200) {
+    if (response.body != null && response.body.isNotEmpty) {
+      print(response.body);
+    } else {
+      print("Response body is null or empty.");
+    }
+  } else {
+    print("Failed to buy. Status code: ${response.statusCode}");
+    // print(response.body);
+  }
+}
 Future sellMarket(String stockId, int quantity, int price) async {
   final actok = await getAccessToken();
   final response = await http.post(
@@ -174,7 +198,7 @@ Future sellMarket(String stockId, int quantity, int price) async {
   );
   if (response.statusCode == 200) {
     if (response.body != null && response.body.isNotEmpty) {
-      // print(response.body);
+      print(response.body);
     } else {
       print("Response body is null or empty.");
     }

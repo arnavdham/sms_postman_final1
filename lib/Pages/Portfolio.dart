@@ -546,7 +546,8 @@ class _ExpandableViewState extends State<ExpandableView> {
                   child: TextButton(
                     onPressed: () {
                       int quantity = int.tryParse(_quantityController.text) ?? 0;
-                      sendMarketBuy(widget.id, quantity, int.parse(widget.currentPrice));
+                      // sendMarketBuy(widget.id, quantity, int.parse(widget.currentPrice));
+                      sendIPOBuy(widget.id, quantity);
                       _quantityController.clear();
                       Navigator.of(context).pop();
                     },
