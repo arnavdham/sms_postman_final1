@@ -120,7 +120,7 @@ Future fetchMarketStatus() async{
     if (response.body != null && response.body.isNotEmpty) {
       dynamic jsonData = json.decode(response.body);
       if (jsonData is Map<String, dynamic>) {
-        // print(response.body);
+        print(response.body);
       } else {
         print("Invalid JSON format. Expected a Map.");
       }
@@ -128,7 +128,7 @@ Future fetchMarketStatus() async{
       print("Response body is null or empty.");
     }
   } else {
-    print("Failed to fetch news. Status code: ${response.statusCode}");
+    print("Failed to fetch news. Status code: ${response.body}");
   }
 }
 
@@ -178,7 +178,8 @@ Future sendIPOBuy(String stockId, int quantity) async {
       print("Response body is null or empty.");
     }
   } else {
-    print("Failed to buy. Status code: ${response.statusCode}");
+    print("Failed to buy. Status code: ${response.body}");
+    print("Failed to buy. Status code: ${response.body}");
     // print(response.body);
   }
 }
