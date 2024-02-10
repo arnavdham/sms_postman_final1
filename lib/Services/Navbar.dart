@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:sms_postman/Pages/Account.dart';
+import 'package:sms_postman/Pages/DepositNtransfers.dart';
 import 'package:sms_postman/Services/ConstantFile.dart';
 import 'package:sms_postman/main.dart';
 import 'Colors.dart';
-import 'package:http/http.dart' as http;
 class Navbar extends StatefulWidget {
   const Navbar({super.key});
 
@@ -128,79 +128,82 @@ class _NavbarState extends State<Navbar> {
                             ),
                           ),
                         ),
-                        // SizedBox(height: pH*0.013,),
-                        // Row(
-                        //   children: [
-                        //     SizedBox(width: pW*0.08,),
-                        //     SvgPicture.asset(
-                        //       width: pW*0.066,
-                        //       'assets/Deposits.svg',
-                        //     ),
-                        //     SizedBox(width: pW*0.05,),
-                        //     Container(
-                        //       width: pW*0.45,
-                        //       child: TextButton(
-                        //         onPressed:(){
-                        //
-                        //         },
-                        //         child:Text(
-                        //           'Deposits & transfers',
-                        //           style: TextStyle(
-                        //             color: Colors.white,
-                        //             fontSize: 18,
-                        //             fontFamily: 'Gilroy-Bold',
-                        //           ),
-                        //         ),
-                        //       ),
-                        //     ),
-                        //   ],
-                        // ),
-                        // SizedBox(height: pH*0.013,),
-                        // Align(
-                        //   alignment:Alignment.center,
-                        //   child: Container(
-                        //     width: pW*0.43,
-                        //     child: Divider(
-                        //       color: Color(0xFF515151),
-                        //       thickness: 2,
-                        //     ),
-                        //   ),
-                        // ),
-                        // SizedBox(height: pH*0.013,),
-                        // Row(
-                        //   children: [
-                        //     SizedBox(width: pW*0.08,),
-                        //     SvgPicture.asset(
-                        //       width: pW*0.066,
-                        //       'assets/IPO.svg',
-                        //     ),
-                        //     SizedBox(width: pW*0.05,),
-                        //     TextButton(
-                        //       onPressed:(){
-                        //
-                        //       },
-                        //       child:Text(
-                        //         'IPO',
-                        //         style: TextStyle(
-                        //           color: Colors.white,
-                        //           fontSize: 18,
-                        //           fontFamily: 'Gilroy-Bold',
-                        //         ),
-                        //       ),
-                        //     ),
-                        //   ],
-                        // ),
-                        // SizedBox(height: pH*0.013,),
-                        // Align(
-                        //   alignment:Alignment.center,
-                        //   child: Container(
-                        //     width: pW*0.43,
-                        //     child: Divider(
-                        //       color: Color(0xFF515151),
-                        //       thickness: 2,
-                        //     ),
-                        //   ),
-                        // ),
+                        SizedBox(height: pH*0.013,),
+                        Row(
+                          children: [
+                            SizedBox(width: pW*0.08,),
+                            SvgPicture.asset(
+                              width: pW*0.066,
+                              'assets/Deposits.svg',
+                            ),
+                            SizedBox(width: pW*0.05,),
+                            Container(
+                              width: pW*0.45,
+                              child: TextButton(
+                                onPressed:(){
+                                  Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(builder: (context) => DNT()),
+                                  );
+                                },
+                                child:Text(
+                                  'Deposits & transfers',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 18,
+                                    fontFamily: 'Gilroy-Bold',
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: pH*0.013,),
+                        Align(
+                          alignment:Alignment.center,
+                          child: Container(
+                            width: pW*0.43,
+                            child: Divider(
+                              color: Color(0xFF515151),
+                              thickness: 2,
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: pH*0.013,),
+                        Row(
+                          children: [
+                            SizedBox(width: pW*0.08,),
+                            SvgPicture.asset(
+                              width: pW*0.066,
+                              'assets/IPO.svg',
+                            ),
+                            SizedBox(width: pW*0.05,),
+                            TextButton(
+                              onPressed:(){
+
+                              },
+                              child:Text(
+                                'IPO',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 18,
+                                  fontFamily: 'Gilroy-Bold',
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: pH*0.013,),
+                        Align(
+                          alignment:Alignment.center,
+                          child: Container(
+                            width: pW*0.43,
+                            child: Divider(
+                              color: Color(0xFF515151),
+                              thickness: 2,
+                            ),
+                          ),
+                        ),
                         SizedBox(height: pH*0.013,),
                         Row(
                           children: [

@@ -1,20 +1,15 @@
 import 'dart:convert';
 import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
-import 'package:sms_postman/Pages/Loading.dart';
 import 'package:sms_postman/Pages/drawer_screen.dart';
 import 'package:sms_postman/Services/Colors.dart';
 import 'package:sizer/sizer.dart';
 import 'package:http/http.dart' as http;
-import 'package:sms_postman/Services/ConstantFile.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/services.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'dart:async';
 import 'package:sms_postman/Services/AccessTokensFunctions.dart';
+
+import 'Services/ConstantFile.dart';
 
 void main() {
   runApp(const MyApp());
@@ -50,7 +45,6 @@ class DrawerScreens extends StatefulWidget {
 class _DrawerScreensState extends State<DrawerScreens> {
   String responseData = '';
   bool sign = false;
-
   googleLogin() async {
     print("Login method called.");
     GoogleSignIn _googleSignIn = GoogleSignIn();

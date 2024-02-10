@@ -22,14 +22,9 @@ double balpercent=balanced/1000000;
 
 Future<void> updateValues() async {
   balanced = userdatbject!.balance as int;
-
-  // Update other values based on balance
   percent = (balanced / 1000000) - 1;
   profits = balanced - 1000000;
   balpercent = balanced / 1000000;
-
-  // You can also update leaderboard position here if needed
-  // Example: leaderboardPosition = calculateLeaderboardPosition();
 }
 
 Future fetchStocks() async {
@@ -51,6 +46,28 @@ Future fetchStocks() async {
     }
   } else {
     print("Failed to fetch news. Status code: ${response.statusCode}");
+  }
+}
+Future fetchPortfolio() async {
+  final actok = await getAccessToken();
+  final response = await http.get(
+    Uri.parse('https://smsapp.bits-postman-lab.in/portfolio'),
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': actok.toString(),
+    },
+  );
+  if (response.statusCode == 200) {
+    if (response.body != null && response.body.isNotEmpty) {
+      print(response.body);
+      // List<dynamic> jsonData = json.decode(response.body);
+      // stocksd = jsonData.map((data) => Stocks.fromJson(data)).toList();
+    } else {
+      print("Response body is null or empty.");
+    }
+  } else {
+    print("Failed to fetch portfolio. Status code: ${response.statusCode}");
+    print(response.body);
   }
 }
 
@@ -154,10 +171,6 @@ Future fetchMarketStatus() async{
       if (jsonData is Map<String, dynamic>) {
         print(response.body);
         // balanced = userdatbject!.balance as int;
-        percent = (balanced / 1000000)-1;
-        profits=balanced-1000000;
-        balpercent=balanced/1000000;
-        leaderboardposition;
       } else {
         print("Invalid JSON format. Expected a Map.");
       }
@@ -186,12 +199,14 @@ Future sendMarketBuy(String stockId, int quantity, int price) async {
   if (response.statusCode == 200) {
     if (response.body != null && response.body.isNotEmpty) {
       // print(response.body);
+      return true;
     } else {
       print("Response body is null or empty.");
     }
   } else {
     print("Failed to buy. Status code: ${response.statusCode}");
     // print(response.body);
+    return false;
   }
 }
 
@@ -210,16 +225,19 @@ Future sendIPOBuy(String stockId, int quantity) async {
   );
   if (response.statusCode == 200) {
     if (response.body != null && response.body.isNotEmpty) {
-      print(response.body);
+      // print(response.body);
+      return true;
     } else {
       print("Response body is null or empty.");
     }
   } else {
     print("Failed to buy. Status code: ${response.body}");
-    print("Failed to buy. Status code: ${response.body}");
+    // print("Failed to buy. Status code: ${response.body}");
     // print(response.body);
+    return false;
   }
 }
+
 Future sellMarket(String stockId, int quantity, int price) async {
   final actok = await getAccessToken();
   final response = await http.post(
@@ -236,12 +254,15 @@ Future sellMarket(String stockId, int quantity, int price) async {
   );
   if (response.statusCode == 200) {
     if (response.body != null && response.body.isNotEmpty) {
-      print(response.body);
+      // print(response.body);
+      return true;
     } else {
       print("Response body is null or empty.");
     }
   } else {
     print("Failed to sell. Status code: ${response.statusCode}");
+    // print(response.body);
+    return false;
   }
 }
 
