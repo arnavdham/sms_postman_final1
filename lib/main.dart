@@ -157,40 +157,35 @@ class _DrawerScreensState extends State<DrawerScreens> {
                     ),
                   ),
                   SizedBox(height: pH*0.15,),
-                  Container(
-                    child: Align(
-                      alignment: Alignment.center,
-                      child: Column(
-                        children: [
-                          Container(
-                            width: pW*0.75,
-                            height: pH*0.075,
-                            decoration: ShapeDecoration(
-                              color: Color(0xFF2D1450),
-                              shape: RoundedRectangleBorder(
-                                side: BorderSide(width: 1, color: Color(0xFF5B1BA9)),
-                                borderRadius: BorderRadius.circular(20),
-                              ),
+                  Column(
+                    children: [
+                      TextButton(
+                        onPressed: googleLogin,
+                        child: Container(
+                          width: pW*0.75,
+                          height: pH*0.075,
+                          decoration: ShapeDecoration(
+                            color: Color(0xFF2D1450),
+                            shape: RoundedRectangleBorder(
+                              side: BorderSide(width: 1, color: Color(0xFF5B1BA9)),
+                              borderRadius: BorderRadius.circular(20),
                             ),
-                            child: Align(
-                              alignment: Alignment.center,
-                              child: TextButton(
-                                child: Text(
-                                  'Sign up',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 20,
-                                    fontFamily: 'Inter',
-                                    fontWeight: FontWeight.w700,
-                                  ),
-                                ),
-                                onPressed: googleLogin,
+                          ),
+                          child: Align(
+                            alignment: Alignment.center,
+                            child: Text(
+                              'Sign up',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 20,
+                                fontFamily: 'Inter',
+                                fontWeight: FontWeight.w700,
                               ),
                             ),
                           ),
-                        ],
+                        ),
                       ),
-                    ),
+                    ],
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,

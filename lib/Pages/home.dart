@@ -593,13 +593,12 @@ class _HomeState extends State<Home> {
                                           ),
                                           child: Container(
                                             width:pW*0.43536,
-// height: pH*0.032,
                                             child: Row(
                                               mainAxisAlignment:
                                               MainAxisAlignment.spaceEvenly,
                                               children: [
                                                 Text(
-                                                  "today's earning",
+                                                  "total's earning",
                                                   style: TextStyle(
                                                     fontSize: 12,
                                                     color: Colors.white,
@@ -621,7 +620,7 @@ class _HomeState extends State<Home> {
                                                         ),
                                                         SizedBox(width: pW*0.0026,),
                                                         Text(
-                                                          "7.64%",
+                                                          '${percent.toStringAsFixed(2)}%',
                                                           style: TextStyle(
                                                             fontSize: 12,
                                                             color: MyColors.white,

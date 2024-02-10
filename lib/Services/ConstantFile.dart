@@ -13,7 +13,11 @@ List<UserProfile> userlist=[];
 UserProfile? userdatbject;
 List<LeaderBoarData> leader=[];
 List<trendingsks> trend=[];
-
+int balanced = userdatbject!.balance as int;
+double percent = (balanced / 1000000)-1;
+double profits=balanced-1000000;
+double balpercent=balanced/1000000;
+int? leaderboardposition;
 Future fetchStocks() async {
   final actok = await getAccessToken();
   final response = await http.get(
@@ -50,6 +54,22 @@ Future fetchLeaderboard() async {
       List<dynamic> jsonData = json.decode(response.body);
       leader = jsonData.map((data) => LeaderBoarData.fromJson(data)).toList();
       // print(response.body);
+      String displayedText;
+      for (int i = 0; i < leader.length; i++) {
+        if (leader[i].isYou.toString() == "true") {
+          leaderboardposition = leader[i].position;
+        }
+        if (leader[i].fullName.toString().split(' ').length > 2) {
+          // If there are more than two words, take the first two words
+          displayedText = leader[i].fullName.toString().split(' ').take(2).join(' ');
+          leader[i].fullName=displayedText;
+        } else {
+          // If there are two or fewer words, display the entire string
+          displayedText = leader[i].fullName.toString();
+          leader[i].fullName=displayedText;
+        }
+      }
+      // print(leaderboardposition);
     } else {
       print("Response body is null or empty.");
     }

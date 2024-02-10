@@ -200,7 +200,7 @@ class _AccountPageState extends State<AccountPage> {
                                       ),
                                     ),
                                     Text(
-                                      '6th',
+                                      '${leaderboardposition}',
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
                                         color: Color(0xFF704EF4),

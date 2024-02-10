@@ -161,7 +161,7 @@ class _PortfolioState extends State<Portfolio> {
                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       children: [
                                         Column(
-                                          // crossAxisAlignment: CrossAxisAlignment.start,
+                                          crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
                                             Text(
                                               'Total Balance',
@@ -173,7 +173,7 @@ class _PortfolioState extends State<Portfolio> {
                                             ),
                                             SizedBox(height:pH*0.0056),
                                             Text(
-                                              '\$ ${userdatbject!.balance.toString()}.00',
+                                              'Rs ${userdatbject!.balance.toString()}.00',
                                               style: TextStyle(
                                                 fontSize: 20,
                                                 fontWeight: FontWeight.bold,
@@ -185,21 +185,19 @@ class _PortfolioState extends State<Portfolio> {
                                           ],
                                         ),
                                         Container(
-                                          child: ClipOval(
-                                            child: Row(
-                                              children: [
-                                                SvgPicture.asset('assets/prof.svg'),
-                                                SizedBox(width: pW * 0.005),
-                                                Text(
-                                                  '0 %',
-                                                  style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontSize: 12,
-                                                    fontFamily: 'Gilroy-Medium',
-                                                  ),
+                                          child: Row(
+                                            children: [
+                                              SvgPicture.asset('assets/prof.svg'),
+                                              SizedBox(width: pW * 0.005),
+                                              Text(
+                                                '${balpercent.toStringAsFixed(2)}%',
+                                                style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 12,
+                                                  fontFamily: 'Gilroy-Medium',
                                                 ),
-                                              ],
-                                            ),
+                                              ),
+                                            ],
                                           ),
                                           decoration: BoxDecoration(
                                             // color: MyColors.color24,
@@ -229,19 +227,19 @@ class _PortfolioState extends State<Portfolio> {
                                       children: [
                                         Column(
                                           // mainAxisAlignment: MainAxisAlignment.start,
-                                          // crossAxisAlignment: CrossAxisAlignment.stretch,
+                                          crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
                                             Text(
                                               // textAlign: TextAlign.left,
-                                              'Profit',
-                                              style: TextStyle(color: Colors.green,fontFamily: 'CircularSpotifyTxT-Bold',),
+                                              profits>=0 ? 'Total Profit' : 'Total Loss',
+                                              style: profits>=0 ? TextStyle(color: Colors.green, fontFamily: 'CircularSpotifyTxT-Bold') : TextStyle(color: Colors.red, fontFamily: 'Arial'),
                                             ),
                                             SizedBox(
                                               height: pH*0.0056,
                                             ),
                                             Text(
                                               // textAlign: TextAlign.left,
-                                              '\$13250.00',
+                                              'Rs ${profits.abs().toStringAsFixed(2)}',
                                               style: TextStyle(color: Colors.white,fontFamily: 'CircularSpotifyTxT-Bold',),
                                             ),
                                           ],
@@ -251,7 +249,7 @@ class _PortfolioState extends State<Portfolio> {
                                               SvgPicture.asset('assets/prof.svg'),
                                               SizedBox(width: pW*0.005,),
                                               Text(
-                                                '0 %',
+                                                '${percent.toStringAsFixed(2)}%',
                                                 style:TextStyle(
                                                   color: Colors.white,
                                                   fontSize: 12,
@@ -357,99 +355,128 @@ class ExpandableCard extends StatefulWidget {
 class _ExpandableCardState extends State<ExpandableCard> {
   @override
   Widget build(BuildContext context) {
+    double pW=MediaQuery.of(context).size.width;
+    double pH=MediaQuery.of(context).size.height;
     return Card(
       color: MyColors.color2,
-      child: Padding(
-        padding: EdgeInsets.all(6.0),
-        child: Container(
-          height: MediaQuery.of(context).size.height*0.09,
-          child: ListTile(
-            splashColor: Colors.transparent,
-            tileColor: Colors.transparent,
-            selectedTileColor: Colors.transparent,
-            focusColor: Colors.transparent,
-            hoverColor: Colors.transparent,
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => ExpandableView(
-                    imageUrl: widget.imageUrl,
-                    stockName: widget.stockName,
-                    currentPrice: widget.currentPrice,
-                    change: widget.change,
-                    id:widget.id,
-                    shares:widget.shares,
-                  ),
+      child: Container(
+        // clipBehavior: Clip.antiAlias,
+        padding: EdgeInsets.fromLTRB(pW*0.032,pH*0.015 , pW*0.032, 0 ),
+        height: widget.stockName.length>12 ?MediaQuery.of(context).size.height*0.115:MediaQuery.of(context).size.height*0.09,
+        child: ListTile(
+          splashColor: Colors.transparent,
+          tileColor: Colors.transparent,
+          selectedTileColor: Colors.transparent,
+          focusColor: Colors.transparent,
+          hoverColor: Colors.transparent,
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ExpandableView(
+                  imageUrl: widget.imageUrl,
+                  stockName: widget.stockName,
+                  currentPrice: widget.currentPrice,
+                  change: widget.change,
+                  id:widget.id,
+                  shares:widget.shares,
                 ),
-              );
-            },
-            leading: null,
-            trailing: null,
-            title:Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              ),
+            );
+          },
+          // leading: null,
+          // trailing: null,
+          // title:Row(
+          //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //   children: [
+          //     Container(
+          //       width:MediaQuery.of(context).size.width*0.21,
+          //       child: Column(
+          //         children: [
+          //           Align(
+          //             alignment: Alignment.topLeft,
+          //             child: Text(
+          //               widget.stockName,
+          //               style: TextStyle(
+          //                 color: Colors.white,
+          //                 fontSize: 15,
+          //               ),
+          //             ),
+          //           ),
+          //           Align(
+          //             alignment: Alignment.topLeft,
+          //             child: Text(
+          //               widget.shares,
+          //               style: TextStyle(
+          //                 color: MyColors.color23,
+          //                 fontSize: 13,
+          //               ),
+          //             ),
+          //           ),
+          //         ],
+          //       ),
+          //     ),
+          //     Container(
+          //       width: MediaQuery.of(context).size.width*0.2,
+          //       height: MediaQuery.of(context).size.width*0.1,
+          //       child: Image.asset(
+          //           'assets/shareloss.png',
+          //       ),
+          //     ),
+          //     Container(
+          //       width:MediaQuery.of(context).size.width*0.25,
+          //       child: Column(
+          //         children: [
+          //           Align(
+          //             alignment:Alignment.topLeft,
+          //             child: Text(
+          //               widget.currentPrice as String,
+          //               style: TextStyle(
+          //                 fontSize: 15,
+          //                 color: Colors.red,
+          //               ),
+          //             ),
+          //           ),
+          //           Align(
+          //             alignment:Alignment.topLeft,
+          //             child: Text(
+          //               widget.change,
+          //               style: TextStyle(
+          //                 fontSize: 12,
+          //                 color: Colors.white,
+          //               ),
+          //             ),
+          //           ),
+          //         ],
+          //       ),
+          //     )
+          //   ],
+          // ),
+          leading:Container(
+            width: pW*0.2,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              // mainAxisSize: MainAxisSize.min,
+              // mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Container(
-                  width:MediaQuery.of(context).size.width*0.21,
-                  child: Column(
-                    children: [
-                      Align(
-                        alignment: Alignment.topLeft,
-                        child: Text(
-                          widget.stockName,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 15,
-                          ),
-                        ),
-                      ),
-                      Align(
-                        alignment: Alignment.topLeft,
-                        child: Text(
-                          widget.shares,
-                          style: TextStyle(
-                            color: MyColors.color23,
-                            fontSize: 13,
-                          ),
-                        ),
-                      ),
-                    ],
+                Text(
+                  widget.stockName,
+                  style: TextStyle(
+                    color: Color(0xFFF5F5F5),
+                    fontSize: 13,
+                    fontFamily: 'Gilroy-Medium',
+                    fontWeight: FontWeight.w400,
                   ),
                 ),
-                Container(
-                  width: MediaQuery.of(context).size.width*0.2,
-                  height: MediaQuery.of(context).size.width*0.1,
-                  child: Image.asset(
-                      'assets/shareloss.png',
+                Text(
+                  widget.shares,
+                  style: TextStyle(
+                    color: Color(0xFF94A3B8),
+                    fontSize: 8,
+                    fontFamily: 'Gilroy-Medium',
+                    fontWeight: FontWeight.w400,
                   ),
                 ),
-                Container(
-                  width:MediaQuery.of(context).size.width*0.25,
-                  child: Column(
-                    children: [
-                      Align(
-                        alignment:Alignment.topLeft,
-                        child: Text(
-                          widget.currentPrice as String,
-                          style: TextStyle(
-                            fontSize: 15,
-                            color: Colors.red,
-                          ),
-                        ),
-                      ),
-                      Align(
-                        alignment:Alignment.topLeft,
-                        child: Text(
-                          widget.change,
-                          style: TextStyle(
-                            fontSize: 12,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                )
               ],
             ),
           ),
