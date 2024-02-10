@@ -72,7 +72,7 @@ class _PortfolioState extends State<Portfolio> {
     double pW = MediaQuery.of(context).size.width;
     double pH = MediaQuery.of(context).size.height;
     return FutureBuilder(
-        future:fetchUser(),
+        future:updateValues(),
         builder: (context,snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(child: CircularProgressIndicator());
@@ -475,6 +475,35 @@ class _ExpandableCardState extends State<ExpandableCard> {
                     fontSize: 8,
                     fontFamily: 'Gilroy-Medium',
                     fontWeight: FontWeight.w400,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          title:Container(
+            width: MediaQuery.of(context).size.width*0.2,
+            height: MediaQuery.of(context).size.width*0.1,
+            child: Image.asset(
+              'assets/shareloss.png',
+            ),
+          ),
+          trailing: Container(
+            width: pW*0.2,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  widget.currentPrice as String,
+                  style: TextStyle(
+                    fontSize: 13,
+                    color: Colors.red,
+                  ),
+                ),
+                Text(
+                  widget.change,
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: Colors.white,
                   ),
                 ),
               ],

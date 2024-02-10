@@ -14,50 +14,6 @@ class Leaderboard extends StatefulWidget {
 }
 
 class _LeaderboardState extends State<Leaderboard> {
-  // final List<Map<String, dynamic>> leaderboardData = [
-  //   {
-  //     'rank': '4',
-  //     'imagePath': 'assets/ListLeaderboard.png',
-  //     'text': 'Ruhika',
-  //     'Points': '36'
-  //   },
-  //   {
-  //     'rank': '5',
-  //     'imagePath': 'assets/ListLeaderboard.png',
-  //     'text': 'YOU',
-  //     'Points': '36'
-  //   },
-  //   {
-  //     'rank': '6',
-  //     'imagePath': 'assets/ListLeaderboard.png',
-  //     'text': 'Varun',
-  //     'Points': '36'
-  //   },
-  //   {
-  //     'rank': '7',
-  //     'imagePath': 'assets/ListLeaderboard.png',
-  //     'text': 'Ishita',
-  //     'Points': '36'
-  //   },
-  //   {
-  //     'rank': '8',
-  //     'imagePath': 'assets/ListLeaderboard.png',
-  //     'text': 'Saket',
-  //     'Points': '36'
-  //   },
-  //   {
-  //     'rank': '9',
-  //     'imagePath': 'assets/ListLeaderboard.png',
-  //     'text': 'Siddharth',
-  //     'Points': '36'
-  //   },
-  //   {
-  //     'rank': '10',
-  //     'imagePath': 'assets/ListLeaderboard.png',
-  //     'text': 'Abhishek',
-  //     'Points': '36'
-  //   },
-  // ];
   @override
   Widget build(BuildContext context) {
     double pW = MediaQuery.of(context).size.width;

@@ -13,11 +13,25 @@ List<UserProfile> userlist=[];
 UserProfile? userdatbject;
 List<LeaderBoarData> leader=[];
 List<trendingsks> trend=[];
+int? leaderboardposition;
+
 int balanced = userdatbject!.balance as int;
 double percent = (balanced / 1000000)-1;
 double profits=balanced-1000000;
 double balpercent=balanced/1000000;
-int? leaderboardposition;
+
+Future<void> updateValues() async {
+  balanced = userdatbject!.balance as int;
+
+  // Update other values based on balance
+  percent = (balanced / 1000000) - 1;
+  profits = balanced - 1000000;
+  balpercent = balanced / 1000000;
+
+  // You can also update leaderboard position here if needed
+  // Example: leaderboardPosition = calculateLeaderboardPosition();
+}
+
 Future fetchStocks() async {
   final actok = await getAccessToken();
   final response = await http.get(
@@ -60,11 +74,9 @@ Future fetchLeaderboard() async {
           leaderboardposition = leader[i].position;
         }
         if (leader[i].fullName.toString().split(' ').length > 2) {
-          // If there are more than two words, take the first two words
           displayedText = leader[i].fullName.toString().split(' ').take(2).join(' ');
           leader[i].fullName=displayedText;
         } else {
-          // If there are two or fewer words, display the entire string
           displayedText = leader[i].fullName.toString();
           leader[i].fullName=displayedText;
         }
@@ -141,6 +153,11 @@ Future fetchMarketStatus() async{
       dynamic jsonData = json.decode(response.body);
       if (jsonData is Map<String, dynamic>) {
         print(response.body);
+        // balanced = userdatbject!.balance as int;
+        percent = (balanced / 1000000)-1;
+        profits=balanced-1000000;
+        balpercent=balanced/1000000;
+        leaderboardposition;
       } else {
         print("Invalid JSON format. Expected a Map.");
       }
