@@ -621,7 +621,9 @@ class _ExpandableViewState extends State<ExpandableView> {
   void _showBuyDialog() {
     TextEditingController _quantityController = TextEditingController();
     int totalPrice = 0;
-
+    int quantitys=0;
+    int price=0;
+    TextEditingController _priceController=TextEditingController();
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -630,7 +632,7 @@ class _ExpandableViewState extends State<ExpandableView> {
             return AlertDialog(
               title: Text('${widget.stockName}  - ${widget.currentPrice}'),
               content: Container(
-                height: MediaQuery.of(context).size.height * 0.2,
+                height: MediaQuery.of(context).size.height * 0.3,
                 child: Column(
                   children: [
                     TextField(
@@ -640,15 +642,30 @@ class _ExpandableViewState extends State<ExpandableView> {
                       onChanged: (value) {
                         setState(() {
                           if (value.isNotEmpty) {
-                            int inputValue = int.parse(value);
-                            totalPrice = inputValue * int.parse(widget.currentPrice);
+                            quantitys = int.parse(value);
                           } else {
                             totalPrice = 0;
                           }
                         });
                       },
                     ),
-                    SizedBox(height: MediaQuery.of(context).size.height * 0.05),
+                    SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                    TextField(
+                      controller: _priceController,
+                      decoration: InputDecoration(labelText: 'Price'),
+                      keyboardType: TextInputType.number,
+                      onChanged: (value) {
+                        setState(() {
+                          if (value.isNotEmpty) {
+                            price= int.parse(value);
+                            totalPrice=quantitys*price;
+                          } else {
+                            totalPrice = 0;
+                          }
+                        });
+                      },
+                    ),
+                    SizedBox(height: MediaQuery.of(context).size.height * 0.02),
                     Row(
                       children: [
                         Text('Total price : '),
@@ -673,7 +690,7 @@ class _ExpandableViewState extends State<ExpandableView> {
                   child: TextButton(
                     onPressed: () async {
                       int quantity = int.tryParse(_quantityController.text) ?? 0;
-                      bool success = await sendMarketBuy(widget.id, quantity, int.parse(widget.currentPrice));
+                      bool success = await sendMarketBuy(widget.id, quantity, price);
                       _quantityController.clear();
                       Navigator.of(context).pop();
                       if (success) {
@@ -733,7 +750,9 @@ class _ExpandableViewState extends State<ExpandableView> {
   void _showSellDialog() {
     TextEditingController _quantityController = TextEditingController();
     int totalPrice = 0;
-
+    int quantitys=0;
+    int price=0;
+    TextEditingController _priceController=TextEditingController();
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -742,7 +761,7 @@ class _ExpandableViewState extends State<ExpandableView> {
             return AlertDialog(
               title: Text('${widget.stockName}  - ${widget.currentPrice}'),
               content: Container(
-                height: MediaQuery.of(context).size.height * 0.2,
+                height: MediaQuery.of(context).size.height * 0.3,
                 child: Column(
                   children: [
                     TextField(
@@ -752,15 +771,30 @@ class _ExpandableViewState extends State<ExpandableView> {
                       onChanged: (value) {
                         setState(() {
                           if (value.isNotEmpty) {
-                            int inputValue = int.parse(value);
-                            totalPrice = inputValue * int.parse(widget.currentPrice);
+                            quantitys = int.parse(value);
                           } else {
                             totalPrice = 0;
                           }
                         });
                       },
                     ),
-                    SizedBox(height: MediaQuery.of(context).size.height * 0.05),
+                    SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                    TextField(
+                      controller: _priceController,
+                      decoration: InputDecoration(labelText: 'Price'),
+                      keyboardType: TextInputType.number,
+                      onChanged: (value) {
+                        setState(() {
+                          if (value.isNotEmpty) {
+                            price= int.parse(value);
+                            totalPrice=quantitys*price;
+                          } else {
+                            totalPrice = 0;
+                          }
+                        });
+                      },
+                    ),
+                    SizedBox(height: MediaQuery.of(context).size.height * 0.02),
                     Row(
                       children: [
                         Text('Total price : '),
@@ -785,7 +819,7 @@ class _ExpandableViewState extends State<ExpandableView> {
                   child: TextButton(
                     onPressed: () async {
                       int quantity = int.tryParse(_quantityController.text) ?? 0;
-                      bool success=await sellMarket(widget.id, quantity, int.parse(widget.currentPrice));
+                      bool success=await sellMarket(widget.id, quantity, price);
                       _quantityController.clear();
                       Navigator.of(context).pop();
                       if (success) {

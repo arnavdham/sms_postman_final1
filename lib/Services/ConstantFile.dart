@@ -41,14 +41,14 @@ Future fetchStocks() async {
   );
   if (response.statusCode == 200) {
     if (response.body != null && response.body.isNotEmpty) {
-      // print(response.body);
+      print(response.body);
       List<dynamic> jsonData = json.decode(response.body);
       stocksd = jsonData.map((data) => Stocks.fromJson(data)).toList();
     } else {
       print("Response body is null or empty.");
     }
   } else {
-    print("Failed to fetch news. Status code: ${response.statusCode}");
+    print("Failed to fetch stocks. Status code: ${response.statusCode}");
   }
 }
 Future fetchPortfolio() async {
@@ -182,7 +182,7 @@ Future fetchMarketStatus() async{
       print("Response body is null or empty.");
     }
   } else {
-    print("Failed to fetch news. Status code: ${response.body}");
+    print("Failed to fetch marketstatus. Status code: ${response.body}");
   }
 }
 
@@ -229,15 +229,15 @@ Future sendIPOBuy(String stockId, int quantity) async {
   );
   if (response.statusCode == 200) {
     if (response.body != null && response.body.isNotEmpty) {
-      // print(response.body);
+      print(response.body);
       return true;
     } else {
       print("Response body is null or empty.");
     }
   } else {
-    print("Failed to buy. Status code: ${response.body}");
+    print("Failed to IPO buy. Status code: ${response.body}");
     // print("Failed to buy. Status code: ${response.body}");
-    // print(response.body);
+    print(response.body);
     return false;
   }
 }
@@ -258,14 +258,14 @@ Future sellMarket(String stockId, int quantity, int price) async {
   );
   if (response.statusCode == 200) {
     if (response.body != null && response.body.isNotEmpty) {
-      // print(response.body);
+      print(response.body);
       return true;
     } else {
       print("Response body is null or empty.");
     }
   } else {
     print("Failed to sell. Status code: ${response.statusCode}");
-    // print(response.body);
+    print(response.body);
     return false;
   }
 }
