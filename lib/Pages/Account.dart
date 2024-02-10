@@ -1,12 +1,8 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:sms_postman/Pages/drawer_screen.dart';
-import 'package:sms_postman/Pages/home.dart';
-import 'package:sms_postman/Pages/home_wrapper.dart';
 import 'package:sms_postman/Services/ConstantFile.dart';
-import 'package:sms_postman/Services/Navbar.dart';
 
 class AccountPage extends StatefulWidget {
   const AccountPage({super.key});

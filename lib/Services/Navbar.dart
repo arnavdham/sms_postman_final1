@@ -141,7 +141,7 @@ class _NavbarState extends State<Navbar> {
                               width: pW*0.45,
                               child: TextButton(
                                 onPressed:(){
-                                  Navigator.pushReplacement(
+                                  Navigator.push(
                                     context,
                                     MaterialPageRoute(builder: (context) => DNT()),
                                   );

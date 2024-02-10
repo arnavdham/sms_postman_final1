@@ -1,11 +1,11 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
+import 'package:sms_postman/Pages/Account.dart';
 import 'package:sms_postman/Services/Colors.dart';
 import 'package:sms_postman/Services/ConstantFile.dart';
-
+import 'package:sms_postman/models/MarketStatusModel.dart';
 import 'Loading.dart';
+import 'package:sms_postman/Pages/drawer_screen.dart';
 
 class DNT extends StatefulWidget {
   const DNT({super.key});
@@ -18,10 +18,7 @@ class _DNTState extends State<DNT> {
   Widget build(BuildContext context) {
     double pW = MediaQuery.of(context).size.width;
     double pH = MediaQuery.of(context).size.height;
-    bool load = false;
-    return (load)
-        ? Loading()
-        : FutureBuilder(
+    return FutureBuilder(
                 future:fetchMarketStatus(),
                 builder: (context,snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
@@ -59,6 +56,15 @@ class _DNTState extends State<DNT> {
                               child: AppBar(
                                 shadowColor: Colors.transparent,
                                 backgroundColor: Colors.transparent,
+                                leading: IconButton(
+                                  icon: Icon(Icons.arrow_back),
+                                  onPressed: () {
+                                    // Navigator.push(
+                                    //   context,
+                                    //   MaterialPageRoute(builder: (context) => AccountPage()),
+                                    // );
+                                  },
+                                ),
                                 iconTheme: IconThemeData(color: Colors.white),
                                 centerTitle: false,
                                 title: Text(
@@ -71,16 +77,84 @@ class _DNTState extends State<DNT> {
                                 ),
                               ),
                             ),
+                            // SizedBox(height: pH*0.1,),
                             Padding(
-                              padding: EdgeInsets.fromLTRB(8.0,8.0,8.0,8.0),
-                              child: Column(
-                                children: [
-                                  SizedBox(
-                                    height: pH * 0.1,
-                                  ),
-                                ],
+                              padding: EdgeInsets.all(16),
+                              child: SingleChildScrollView(
+                                child: Column(
+                                  children: [
+                                    SizedBox(height: pH*0.1,),
+                                    Container(
+                                      color: Colors.transparent,
+                                      height: pH*0.83,
+                                      child: ListView.builder(
+                                        itemCount: globalBuyOrders!.length,
+                                          itemBuilder:(context,index){
+                                            BuyOrders buyOrder = globalBuyOrders![index];
+                                            String stocknamed='';
+                                            for(int j=0;j<stocksd.length;j++){
+                                              if(buyOrder.stock==stocksd[j].id){
+                                                stocknamed=stocksd[j].name.toString();
+                                                // print(stocknamed);
+                                              }
+                                            }
+                                          return Column(
+                                            children: [
+                                              Container(
+                                                padding: EdgeInsets.all(16),
+                                                height: pH*0.15,
+                                                width: pW,
+                                                decoration: BoxDecoration(
+                                                  color: MyColors.color11,
+                                                  borderRadius: BorderRadius.circular(10),
+                                                ),
+                                                child: Column(
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                  children: [
+                                                    Text(
+                                                      'Stock Name: ${stocknamed.toString()}',
+                                                      style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontSize: 14,
+                                                        fontFamily: 'CircularSpotifyTxT-Bold',
+                                                      ),
+                                                    ),
+                                                    Text(
+                                                        'Total Price: ${buyOrder.price!* (buyOrder.quantity as int)}',
+                                                      style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontSize: 14,
+                                                        fontFamily: 'CircularSpotifyTxT-Bold',
+                                                      ),
+                                                    ),
+                                                    Text(
+                                                        'Quantity: ${buyOrder.quantity}',
+                                                      style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontSize: 14,
+                                                        fontFamily: 'CircularSpotifyTxT-Bold',
+                                                      ),
+                                                    ),
+                                                    Text(
+                                                        'isConfirmed: ${buyOrder.isComplete}',
+                                                      style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontSize: 14,
+                                                        fontFamily: 'CircularSpotifyTxT-Bold',
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                              SizedBox(height: pH*0.02,),
+                                            ],
+                                          );
+                                          }),
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ),
+                            )
                           ],
                         ),
                       ),

@@ -1,5 +1,7 @@
 import 'dart:convert';
+import 'dart:core';
 import 'package:sms_postman/models/LeaderboardData.dart';
+import 'package:sms_postman/models/MarketStatusModel.dart';
 import 'package:sms_postman/models/NewsData.dart';
 import 'package:sms_postman/models/StocksData.dart';
 import 'package:sms_postman/Services/AccessTokensFunctions.dart';
@@ -14,6 +16,7 @@ UserProfile? userdatbject;
 List<LeaderBoarData> leader=[];
 List<trendingsks> trend=[];
 int? leaderboardposition;
+List<BuyOrders>? globalBuyOrders=[];
 
 int balanced = userdatbject!.balance as int;
 double percent = (balanced / 1000000)-1;
@@ -169,8 +172,9 @@ Future fetchMarketStatus() async{
     if (response.body != null && response.body.isNotEmpty) {
       dynamic jsonData = json.decode(response.body);
       if (jsonData is Map<String, dynamic>) {
-        print(response.body);
-        // balanced = userdatbject!.balance as int;
+        // print(response.body);
+        MarketStates marketStates = MarketStates.fromJson(jsonData);
+        globalBuyOrders = marketStates.buyOrders;
       } else {
         print("Invalid JSON format. Expected a Map.");
       }
