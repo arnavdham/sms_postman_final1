@@ -81,60 +81,49 @@ class _PortfolioState extends State<Portfolio> {
                     return Text('Error: ${snapshot.error}');
                   } else {
                     return Scaffold(
-                      backgroundColor: Colors.black,
-                      body: Stack(
-                        children: [
-                          Positioned(
-                            top: 0,
-                            right: 0,
-                            child: BackdropFilter(
-                              filter: ImageFilter.blur(sigmaX: 100, sigmaY: 100),
-                              child: Image.asset('assets/bg1.png'),
-                            ),
+                      backgroundColor: Colors.transparent,
+                      resizeToAvoidBottomInset: false,
+                      body: Container(
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            fit: BoxFit.cover,
+                            image: AssetImage("assets/bg.png"),
                           ),
-                          Positioned(
-                            bottom: 0,
-                            left: 0,
-                            child: BackdropFilter(
-                              filter: ImageFilter.blur(sigmaX: 100, sigmaY: 100),
-                              child: Image.asset('assets/bg2.png'),
-                            ),
-                          ),
-                          Positioned(
-                            top: 0,
-                            left: 0,
-                            right: 0,
-                            child: Column(
-                              children: [
-                                AppBar(
-                                  shadowColor: Colors.transparent,
-                                  backgroundColor: Colors.transparent,
-                                  leading: IconButton(
-                                    onPressed: () {
-                                      if (ZoomDrawer.of(context)!.isOpen()) {
-                                        ZoomDrawer.of(context)!.close();
-                                      } else {
-                                        ZoomDrawer.of(context)!.open();
-                                      }
-                                    },
-                                    icon: SvgPicture.asset('assets/Drawer.svg'),
-                                    style: ButtonStyle(
-                                      overlayColor: MaterialStateProperty.all(Colors.transparent),
-                                      splashFactory: NoSplash.splashFactory,
-                                    ),
-                                  ),
-                                  centerTitle: false,
-                                  title: Text(
-                                    'Portfolio',
-                                    style: TextStyle(
-                                      fontSize: 24.0,
-                                      color: Colors.white,
-                                      fontFamily: 'CircularSpotifyTxT-Bold',
-                                    ),
-                                  ),
+                        ),
+                        alignment: Alignment.center,
+                        child: Column(
+                          children: [
+                            AppBar(
+                              shadowColor: Colors.transparent,
+                              backgroundColor: Colors.transparent,
+                              leading: IconButton(
+                                onPressed: () {
+                                  if (ZoomDrawer.of(context)!.isOpen()) {
+                                    ZoomDrawer.of(context)!.close();
+                                  } else {
+                                    ZoomDrawer.of(context)!.open();
+                                  }
+                                },
+                                icon: SvgPicture.asset('assets/Drawer.svg'),
+                                style: ButtonStyle(
+                                  overlayColor: MaterialStateProperty.all(Colors.transparent),
+                                  splashFactory: NoSplash.splashFactory,
                                 ),
+                              ),
+                              centerTitle: false,
+                              title: Text(
+                                'Portfolio',
+                                style: TextStyle(
+                                  fontSize: 24.0,
+                                  color: Colors.white,
+                                  fontFamily: 'CircularSpotifyTxT-Bold',
+                                ),
+                              ),
+                            ),
+                            Column(
+                              children: [
                                 Padding(
-                                  padding: const EdgeInsets.all(16.0),
+                                  padding: EdgeInsets.all(16.0),
                                   child: Container(
                                     width: double.infinity,
                                     child: Column(
@@ -323,8 +312,8 @@ class _PortfolioState extends State<Portfolio> {
                                 )
                               ],
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     );
                   }
