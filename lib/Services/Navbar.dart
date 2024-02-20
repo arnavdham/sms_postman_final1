@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sms_postman/Pages/Account.dart';
 import 'package:sms_postman/Pages/DepositNtransfers.dart';
+import 'package:sms_postman/Services/AccessTokensFunctions.dart';
 import 'package:sms_postman/Services/ConstantFile.dart';
 import 'package:sms_postman/main.dart';
 import 'Colors.dart';
@@ -21,6 +23,7 @@ class _NavbarState extends State<Navbar> {
     try {
       await _googleSignIn.signOut();
       print("Logged out successfully.");
+      // await removeAccessToken();
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => MyApp()),

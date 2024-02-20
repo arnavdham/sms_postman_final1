@@ -246,158 +246,176 @@ class NewsCardView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double pW = MediaQuery.of(context).size.width;
-    double pH = MediaQuery.of(context).size.height;
-    return Scaffold(
-      backgroundColor: Colors.black,
-      body: Container(
-        height: pH,
-        width: pW,
-        child: Stack(
-          children: [
-            Positioned(
-              top: 0,
-              right: 0,
-              child: BackdropFilter(
-                filter: ImageFilter.blur(sigmaX: 100, sigmaY: 0),
-                child: Image.asset('assets/bg1.png'),
-              ),
-            ),
-            Positioned(
-              top: 0,
-              left: 0,
-              right: 0,
-              child: AppBar(
-                shadowColor: Colors.transparent,
-                backgroundColor: Colors.transparent,
-                centerTitle: false,
-                iconTheme: IconThemeData(color: Colors.white),
-                title: Text(
-                  'News',
-                  style: TextStyle(
-                    fontSize: 24.0,
-                    color: Colors.white,
-                    fontFamily: 'CircularSpotifyTxT-Bold',
-                  ),
-                ),
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.fromLTRB(8.0,8.0,8.0,8.0),
-              child: Column(
+    double pW = MediaQuery
+        .of(context)
+        .size
+        .width;
+    double pH = MediaQuery
+        .of(context)
+        .size
+        .height;
+    return FutureBuilder(
+      future: fetchNewsArticle(idno),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Center(child: CircularProgressIndicator());
+        } else if (snapshot.hasError) {
+          return Text('Error: ${snapshot.error}');
+        } else {
+          return Scaffold(
+            backgroundColor: Colors.black,
+            body: Container(
+              height: pH,
+              width: pW,
+              child: Stack(
                 children: [
-                  SizedBox(
-                    height: pH * 0.1,
+                  Positioned(
+                    top: 0,
+                    right: 0,
+                    child: BackdropFilter(
+                      filter: ImageFilter.blur(sigmaX: 100, sigmaY: 0),
+                      child: Image.asset('assets/bg1.png'),
+                    ),
                   ),
-                  Container(
-                    width:pW,
-                      height: pH*0.26,
-                      child: Image.asset(
-                          'assets/newsimage.png',
-                      ),
-                  ),
-                  Expanded(
-                      child: Container(
-                        padding: EdgeInsets.fromLTRB(8, 0, 8, 0),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(20.0),
-                            topRight: Radius.circular(20.0),
-                            bottomLeft: Radius.circular(0.0),
-                            bottomRight: Radius.circular(0.0),
-                          ),
-                          color: MyColors.color16,
+                  Positioned(
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    child: AppBar(
+                      shadowColor: Colors.transparent,
+                      backgroundColor: Colors.transparent,
+                      centerTitle: false,
+                      iconTheme: IconThemeData(color: Colors.white),
+                      title: Text(
+                        'News',
+                        style: TextStyle(
+                          fontSize: 24.0,
+                          color: Colors.white,
+                          fontFamily: 'CircularSpotifyTxT-Bold',
                         ),
-                        width: double.infinity,
-                        child: Column(
-                          children: [
-                            SizedBox(height:pH*0.05),
-                            Container(
-                              width: pW*0.84,
-                              child: Text(
-                                newstitle,
-                                style: TextStyle(
-                                  color: Colors.white,
-                                ),
-                                textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 8.0),
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          height: pH * 0.1,
+                        ),
+                        Container(
+                          width: pW,
+                          height: pH * 0.26,
+                          child: Image.asset(
+                            'assets/newsimage.png',
+                          ),
+                        ),
+                        Expanded(
+                          child: Container(
+                            padding: EdgeInsets.fromLTRB(8, 0, 8, 0),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(20.0),
+                                topRight: Radius.circular(20.0),
+                                bottomLeft: Radius.circular(0.0),
+                                bottomRight: Radius.circular(0.0),
                               ),
+                              color: MyColors.color16,
                             ),
-                            SizedBox(height:pH*0.024),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            width: double.infinity,
+                            child: Column(
                               children: [
+                                SizedBox(height: pH * 0.05),
                                 Container(
+                                  width: pW * 0.84,
                                   child: Text(
-                                    '250 views',
-                                    style:TextStyle(
-                                      color:Colors.white,
-                                    )
+                                    newstitle,
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                    ),
+                                    textAlign: TextAlign.center,
                                   ),
                                 ),
+                                SizedBox(height: pH * 0.024),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment
+                                      .spaceBetween,
+                                  children: [
+                                    Container(
+                                      child: Text(
+                                          '250 views',
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                          )
+                                      ),
+                                    ),
+                                    Row(
+                                      children: [
+                                        Container(
+                                          width: pW * 0.035,
+                                          height: pH * 0.014,
+                                          child: Image.asset(
+                                            'assets/Clock.png',
+                                          ),
+                                        ),
+                                        SizedBox(width: pW * 0.01,),
+                                        Container(
+                                          child: Text(
+                                              createdat,
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                              )
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(height: pH * 0.021),
+                                Container(
+                                  width: pW * 0.915,
+                                  height: pH * 0.21,
+                                  child: Text(
+                                    newsdescription,
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(height: pH * 0.01),
+                                Container(
+                                  width: double.infinity,
+                                  child: Divider(
+                                    color: Color(0xFF515151),
+                                    thickness: 2,
+                                  ),
+                                ),
+                                SizedBox(height: pH * 0.01),
                                 Row(
                                   children: [
                                     Container(
-                                      width:pW*0.035,
-                                      height:pH*0.014                                                                   ,
-                                      child: Image.asset(
-                                          'assets/Clock.png',
-                                      ),
-                                    ),
-                                    SizedBox(width: pW*0.01,),
-                                    Container(
                                       child: Text(
-                                          createdat,
-                                          style:TextStyle(
-                                            color:Colors.white,
-                                          )
+                                        'Comments',
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                        ),
                                       ),
                                     ),
                                   ],
                                 ),
                               ],
                             ),
-                            SizedBox(height:pH*0.021),
-                            Container(
-                              width: pW*0.915,
-                              height:pH*0.21,
-                              child:Text(
-                                newsdescription,
-                                style: TextStyle(
-                                  color: Colors.white,
-                                ),
-                              ),
-                            ),
-                            SizedBox(height:pH*0.01),
-                            Container(
-                              width: double.infinity,
-                              child: Divider(
-                                color: Color(0xFF515151),
-                                thickness: 2,
-                              ),
-                            ),
-                            SizedBox(height:pH*0.01),
-                            Row(
-                              children: [
-                                Container(
-                                  child: Text(
-                                    'Comments',
-                                    style:TextStyle(
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
+                          ),
                         ),
-                      ),
+                      ],
+                    ),
                   ),
                 ],
               ),
             ),
-          ],
-        ),
-      ),
+          );
+        }
+      },
     );
   }
 }

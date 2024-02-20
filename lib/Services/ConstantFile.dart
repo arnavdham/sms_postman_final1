@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:core';
 import 'package:sms_postman/models/LeaderboardData.dart';
 import 'package:sms_postman/models/MarketStatusModel.dart';
+import 'package:sms_postman/models/NewsArticleData.dart';
 import 'package:sms_postman/models/NewsData.dart';
 import 'package:sms_postman/models/StocksData.dart';
 import 'package:sms_postman/Services/AccessTokensFunctions.dart';
@@ -17,6 +18,7 @@ List<LeaderBoarData> leader=[];
 List<trendingsks> trend=[];
 int? leaderboardposition;
 List<BuyOrders>? globalBuyOrders=[];
+List<NewsArticleData> newsArticleList = [];
 
 int balanced = userdatbject!.balance as int;
 double percent = (balanced / 1000000)-1;
@@ -41,7 +43,7 @@ Future fetchStocks() async {
   );
   if (response.statusCode == 200) {
     if (response.body != null && response.body.isNotEmpty) {
-      print(response.body);
+      // print(response.body);
       List<dynamic> jsonData = json.decode(response.body);
       stocksd = jsonData.map((data) => Stocks.fromJson(data)).toList();
     } else {
@@ -129,6 +131,43 @@ Future fetchNews() async {
     }
   } else {
     print("Failed to fetch news. Status code: ${response.statusCode}");
+  }
+}
+
+Future fetchNewsArticle(String id) async {
+  final actok = await getAccessToken();
+  final response = await http.get(
+    Uri.parse('https://smsapp.bits-postman-lab.in/news/$id'),
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': actok.toString(),
+    },
+  );
+  if (response.statusCode == 200) {
+    if (response.body != null && response.body.isNotEmpty) {
+      // List<dynamic> jsonData = json.decode(response.body);
+      // newsList = jsonData.map((data) => Newsd.fromJson(data)).toList();
+      print(response.body);
+      final jsonData = json.decode(response.body);
+      if (jsonData != null) {
+        if (jsonData is List) {
+          for (var item in jsonData) {
+            newsArticleList.add(NewsArticleData.fromJson(item));
+            print(newsArticleList.toString());
+          }
+        } else {
+          print(NewsArticleData.fromJson(jsonData).sentiment?.user);
+          // print(NewsArticleData.fromJson(jsonData).sentiment?.articles?.dislikeCount.toString());
+          newsArticleList.add(NewsArticleData.fromJson(jsonData));
+          print('Helo');
+        }
+      }
+      // print(response.body);
+    } else {
+      print("Response body is null or empty.");
+    }
+  } else {
+    print("Failed to fetch news article. Status code: ${response.statusCode}");
   }
 }
 
@@ -229,7 +268,7 @@ Future sendIPOBuy(String stockId, int quantity) async {
   );
   if (response.statusCode == 200) {
     if (response.body != null && response.body.isNotEmpty) {
-      print(response.body);
+      // print(response.body);
       return true;
     } else {
       print("Response body is null or empty.");
@@ -237,7 +276,7 @@ Future sendIPOBuy(String stockId, int quantity) async {
   } else {
     print("Failed to IPO buy. Status code: ${response.body}");
     // print("Failed to buy. Status code: ${response.body}");
-    print(response.body);
+    // print(response.body);
     return false;
   }
 }
@@ -258,14 +297,14 @@ Future sellMarket(String stockId, int quantity, int price) async {
   );
   if (response.statusCode == 200) {
     if (response.body != null && response.body.isNotEmpty) {
-      print(response.body);
+      // print(response.body);
       return true;
     } else {
       print("Response body is null or empty.");
     }
   } else {
     print("Failed to sell. Status code: ${response.statusCode}");
-    print(response.body);
+    // print(response.body);
     return false;
   }
 }
