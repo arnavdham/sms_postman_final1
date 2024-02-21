@@ -5,7 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sms_postman/Pages/Account.dart';
 import 'package:sms_postman/Pages/DepositNtransfers.dart';
 import 'package:sms_postman/Services/AccessTokensFunctions.dart';
-import 'package:sms_postman/Services/ConstantFile.dart';
+import 'package:sms_postman/Services/UserFile.dart';
 import 'package:sms_postman/main.dart';
 import 'Colors.dart';
 class Navbar extends StatefulWidget {
@@ -24,6 +24,7 @@ class _NavbarState extends State<Navbar> {
       await _googleSignIn.signOut();
       print("Logged out successfully.");
       // await removeAccessToken();
+      count=0;
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => MyApp()),

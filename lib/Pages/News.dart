@@ -4,7 +4,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:sms_postman/Pages/Portfolio.dart';
 import 'package:sms_postman/Services/Colors.dart';
-import 'package:sms_postman/Services/ConstantFile.dart';
+import 'package:sms_postman/Services/UserFile.dart';
+import 'package:sms_postman/Services/NewsFile.dart';
 
 class NewsTile extends StatelessWidget {
   final String newsType;

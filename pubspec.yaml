@@ -45,6 +45,7 @@ dependencies:
   url_launcher:
   shared_preferences: ^2.2.2
   sizer:
+  provider:
 dev_dependencies:
   flutter_test:
     sdk: flutter

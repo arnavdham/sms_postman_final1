@@ -4,7 +4,8 @@ import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:sms_postman/Services/CandleChart.dart';
 import 'package:sms_postman/Services/Colors.dart';
 import 'dart:ui';
-import 'package:sms_postman/Services/ConstantFile.dart';
+import 'package:sms_postman/Services/UserFile.dart';
+import 'package:sms_postman/Services/StocksFile.dart';
 
 class StockCard extends StatelessWidget {
   final String imageUrl;
