@@ -21,8 +21,6 @@ Future<void> updateValues() async {
   balpercent = balanced / 10000;
 }
 
-
-
 Future fetchUser() async{
   final actok = await getAccessToken();
   final response = await http.get(

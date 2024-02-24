@@ -20,7 +20,7 @@ Future fetchNews() async {
     if (response.body != null && response.body.isNotEmpty) {
       List<dynamic> jsonData = json.decode(response.body);
       newsList = jsonData.map((data) => Newsd.fromJson(data)).toList();
-      // print(response.body);
+      print(response.body);
     } else {
       print("Response body is null or empty.");
     }
@@ -51,7 +51,7 @@ Future fetchNewsArticle(String id) async {
             print(newsArticleList.toString());
           }
         } else {
-          print(NewsArticleData.fromJson(jsonData).sentiment?.user);
+          // print(NewsArticleData.fromJson(jsonData).sentiment?.user);
           // print(NewsArticleData.fromJson(jsonData).sentiment?.articles?.dislikeCount.toString());
           newsArticleList.add(NewsArticleData.fromJson(jsonData));
           print('Helo');

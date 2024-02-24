@@ -6,6 +6,7 @@ import 'package:sms_postman/Pages/Portfolio.dart';
 import 'package:sms_postman/Services/Colors.dart';
 import 'package:sms_postman/Services/UserFile.dart';
 import 'package:sms_postman/Services/NewsFile.dart';
+import 'package:sms_postman/Services/Watchlist.dart';
 
 class NewsTile extends StatelessWidget {
   final String newsType;
@@ -393,6 +394,7 @@ class NewsCardView extends StatelessWidget {
                                 ),
                                 SizedBox(height: pH * 0.01),
                                 Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
                                     Container(
                                       child: Text(
@@ -401,6 +403,29 @@ class NewsCardView extends StatelessWidget {
                                           color: Colors.white,
                                         ),
                                       ),
+                                    ),
+                                    Row(
+                                      children: [
+                                        IconButton(
+                                          icon: SvgPicture.asset('assets/Vector (14).svg'),
+                                          onPressed: () {
+
+                                          },
+                                          style: ButtonStyle(
+                                            overlayColor: MaterialStateProperty.all(Colors.transparent),
+                                            splashFactory: NoSplash.splashFactory,
+                                          ),
+                                        ),
+                                        IconButton(
+                                          icon: SvgPicture.asset('assets/Vector (15).svg'),
+                                          onPressed: () {
+                                          },
+                                          style: ButtonStyle(
+                                            overlayColor: MaterialStateProperty.all(Colors.transparent),
+                                            splashFactory: NoSplash.splashFactory,
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   ],
                                 ),

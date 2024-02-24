@@ -20,7 +20,7 @@ Future fetchLeaderboard() async {
     if (response.body != null && response.body.isNotEmpty) {
       List<dynamic> jsonData = json.decode(response.body);
       leader = jsonData.map((data) => LeaderBoarData.fromJson(data)).toList();
-      // print(response.body);
+      print(response.body);
       String displayedText;
       for (int i = 0; i < leader.length; i++) {
         if (leader[i].isYou.toString() == "true") {

@@ -30,6 +30,7 @@ class Article {
   String? author;
   String? content;
   String? tag;
+  String? image;
   String? createdAt;
 
   Article(
@@ -38,6 +39,7 @@ class Article {
         this.author,
         this.content,
         this.tag,
+        this.image,
         this.createdAt});
 
   Article.fromJson(Map<String, dynamic> json) {
@@ -46,6 +48,7 @@ class Article {
     author = json['author'];
     content = json['content'];
     tag = json['tag'];
+    image = json['image'];
     createdAt = json['createdAt'];
   }
 
@@ -56,47 +59,50 @@ class Article {
     data['author'] = this.author;
     data['content'] = this.content;
     data['tag'] = this.tag;
+    data['image'] = this.image;
     data['createdAt'] = this.createdAt;
     return data;
   }
 }
 
 class Sentiment {
-  Article? article;
-  String? user;
+  OverallSentiment? overallSentiment;
+  String? userSentiment;
 
-  Sentiment({this.article, this.user});
+  Sentiment({this.overallSentiment, this.userSentiment});
+
   Sentiment.fromJson(Map<String, dynamic> json) {
-    article =
-    json['article'] != null ? new Article.fromJson(json['article']) : null;
-    user = json['user'];
+    overallSentiment = json['overallSentiment'] != null
+        ? new OverallSentiment.fromJson(json['overallSentiment'])
+        : null;
+    userSentiment = json['userSentiment'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.article != null) {
-      data['article'] = this.article!.toJson();
+    if (this.overallSentiment != null) {
+      data['overallSentiment'] = this.overallSentiment!.toJson();
     }
-    data['user'] = this.user;
+    data['userSentiment'] = this.userSentiment;
     return data;
   }
 }
-// class Article {
-//   int? likeCount;
-//   int? dislikeCount;
-//
-//   Article({this.likeCount, this.dislikeCount});
-//
-//   Article.fromJson(Map<String, dynamic> json) {
-//     likeCount = json['likeCount'];
-//     dislikeCount = json['dislikeCount'];
-//   }
-//
-//   Map<String, dynamic> toJson() {
-//     final Map<String, dynamic> data = new Map<String, dynamic>();
-//     data['likeCount'] = this.likeCount;
-//     data['dislikeCount'] = this.dislikeCount;
-//     return data;
-//   }
-// }
 
+class OverallSentiment {
+  int? likeCount;
+  int? dislikeCount;
+
+  OverallSentiment({this.likeCount, this.dislikeCount});
+
+  OverallSentiment.fromJson(Map<String, dynamic> json) {
+    likeCount = json['likeCount'];
+    dislikeCount = json['dislikeCount'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['likeCount'] = this.likeCount;
+    data['dislikeCount'] = this.dislikeCount;
+    return data;
+  }
+}

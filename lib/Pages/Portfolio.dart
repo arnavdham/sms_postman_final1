@@ -6,6 +6,7 @@ import 'package:sms_postman/Services/Colors.dart';
 import 'dart:ui';
 import 'package:sms_postman/Services/UserFile.dart';
 import 'package:sms_postman/Services/StocksFile.dart';
+import 'package:sms_postman/Services/Watchlist.dart';
 
 class StockCard extends StatelessWidget {
   final String imageUrl;
@@ -916,9 +917,10 @@ class _ExpandableViewState extends State<ExpandableView> {
                   IconButton(
                     icon: Icon(!isStarPressed ? Icons.star_border : Icons.star),
                     onPressed: () {
-                      setState(() {
-                        isStarPressed = !isStarPressed;
-                      });
+                      addwatch(widget.id);
+                      // setState(() {
+                      //   isStarPressed = add;
+                      // });
                     },
                   ),
                 ],

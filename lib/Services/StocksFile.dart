@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:core';
 import 'package:sms_postman/models/MarketStatusModel.dart';
+import 'package:sms_postman/models/PortfolioData.dart';
 import 'package:sms_postman/models/StocksData.dart';
 import 'package:sms_postman/Services/AccessTokensFunctions.dart';
 import 'package:http/http.dart' as http;
@@ -9,7 +10,7 @@ import 'package:sms_postman/models/Trendsks.dart';
 List<Stocks> stocksd=[];
 List<trendingsks> trend=[];
 List<BuyOrders>? globalBuyOrders=[];
-
+List<Protfoliodata> stocksd12=[];
 Future fetchStocks() async {
   final actok = await getAccessToken();
   final response = await http.get(
@@ -21,7 +22,7 @@ Future fetchStocks() async {
   );
   if (response.statusCode == 200) {
     if (response.body != null && response.body.isNotEmpty) {
-      // print(response.body);
+      print(response.body);
       List<dynamic> jsonData = json.decode(response.body);
       stocksd = jsonData.map((data) => Stocks.fromJson(data)).toList();
     } else {
@@ -44,13 +45,13 @@ Future fetchPortfolio() async {
   if (response.statusCode == 200) {
     if (response.body != null && response.body.isNotEmpty) {
       print(response.body);
-      // List<dynamic> jsonData = json.decode(response.body);
-      // stocksd = jsonData.map((data) => Stocks.fromJson(data)).toList();
+      List<dynamic> jsonData = json.decode(response.body);
+      stocksd12 = jsonData.map((data) => Protfoliodata.fromJson(data)).toList();
     } else {
       print("Response body is null or empty.");
     }
   } else {
-    print("Failed to fetch portfolio. Status code: ${response.statusCode}");
+    print("Failed to fetch portfolio and data. Status code: ${response.statusCode}");
     print(response.body);
   }
 }
@@ -104,7 +105,7 @@ Future sendMarketBuy(String stockId, int quantity, int price) async {
       print("Response body is null or empty.");
     }
   } else {
-    print("Failed to buy. Status code: ${response.statusCode}");
+    print("Failed to send market buy. Status code: ${response.statusCode}");
     // print(response.body);
     return false;
   }
@@ -183,6 +184,6 @@ Future Trendingstks() async {
       print("Response body is null or empty.");
     }
   } else {
-    print("Failed to sell. Status code: ${response.statusCode}");
+    print("Failed to trending stocks. Status code: ${response.statusCode}");
   }
 }

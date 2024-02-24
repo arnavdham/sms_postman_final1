@@ -6,6 +6,7 @@ import 'package:sms_postman/Pages/ExploreStocks.dart';
 import 'package:sms_postman/Pages/Portfolio.dart';
 import 'package:sms_postman/Services/UserFile.dart';
 import 'package:sms_postman/Services/StocksFile.dart';
+import 'package:sms_postman/Services/Watchlist.dart';
 import 'package:sms_postman/models/Trendsks.dart';
 import '../Services/Colors.dart';
 import 'Crypto.dart';
@@ -449,7 +450,7 @@ class _HomeState extends State<Home> {
     return (load)
         ? Loading()
         : FutureBuilder(
-        future:fetchUser(),
+        future:watch(),
         builder: (context,snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(child: CircularProgressIndicator());
@@ -457,170 +458,182 @@ class _HomeState extends State<Home> {
             return Text('Error: ${snapshot.error}');
           } else {
             return  FutureBuilder(
-                future:Trendingstks(),
+                future:fetchUser(),
                 builder: (context,snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return Center(child: CircularProgressIndicator());
                   } else if (snapshot.hasError) {
                     return Text('Error: ${snapshot.error}');
                   } else {
-                    return Scaffold(
-                      backgroundColor: Colors.transparent,
-                      resizeToAvoidBottomInset: false,
-                      body: Container(
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                            fit: BoxFit.cover,
-                            image: AssetImage("assets/bg.png"),
-                          ),
-                        ),
-                        alignment: Alignment.center,
-                        child: Column(
-                          children: [
-                            AppBar(
-                              shadowColor: Colors.transparent,
+                    return  FutureBuilder(
+                        future:Trendingstks(),
+                        builder: (context,snapshot) {
+                          if (snapshot.connectionState == ConnectionState.waiting) {
+                            return Center(child: CircularProgressIndicator());
+                          } else if (snapshot.hasError) {
+                            return Text('Error: ${snapshot.error}');
+                          } else {
+                            return Scaffold(
                               backgroundColor: Colors.transparent,
-                              leading: IconButton(
-                                onPressed: () {
-                                  if (ZoomDrawer.of(context)!.isOpen()) {
-                                    ZoomDrawer.of(context)!.close();
-                                  } else {
-                                    ZoomDrawer.of(context)!.open();
-                                  }
-                                },
-                                icon: SvgPicture.asset('assets/Drawer.svg'),
-                                style: ButtonStyle(
-                                  overlayColor: MaterialStateProperty.all(Colors.transparent),
-                                  splashFactory: NoSplash.splashFactory,
+                              resizeToAvoidBottomInset: false,
+                              body: Container(
+                                decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                    fit: BoxFit.cover,
+                                    image: AssetImage("assets/bg.png"),
+                                  ),
                                 ),
-                              ),
-                              centerTitle: false,
-                              title: Text(
-                                'Home',
-                                style: TextStyle(
-                                  fontSize: 24.0,
-                                  color: Colors.white,
-                                  fontFamily: 'CircularSpotifyTxT-Bold',
-                                ),
-                              ),
-                            ),
-                            Column(
-                              children: [
-                                Container(
-                                  child: Stack(
-                                    children: [
-                                      Transform.rotate(
-                                        angle: 15.68,
-                                        child: Container(
-                                          width: pW * 0.91,
-                                          height: pH*0.17,
-                                          decoration: BoxDecoration(
-                                              color: MyColors.color22,
-                                              borderRadius: BorderRadius.circular(10)
-                                          ),
+                                alignment: Alignment.center,
+                                child: Column(
+                                  children: [
+                                    AppBar(
+                                      shadowColor: Colors.transparent,
+                                      backgroundColor: Colors.transparent,
+                                      leading: IconButton(
+                                        onPressed: () {
+                                          if (ZoomDrawer.of(context)!.isOpen()) {
+                                            ZoomDrawer.of(context)!.close();
+                                          } else {
+                                            ZoomDrawer.of(context)!.open();
+                                          }
+                                        },
+                                        icon: SvgPicture.asset('assets/Drawer.svg'),
+                                        style: ButtonStyle(
+                                          overlayColor: MaterialStateProperty.all(Colors.transparent),
+                                          splashFactory: NoSplash.splashFactory,
                                         ),
                                       ),
-
-                                      Container(
-                                        width: pW * 0.91,
-                                        height: pH*0.17,
-                                        decoration: BoxDecoration(
-                                            color: MyColors.color11,
-                                            borderRadius: BorderRadius.circular(10)
-                                        ),
-                                        child: Image.asset(
-                                          'assets/Group 79.png',
+                                      centerTitle: false,
+                                      title: Text(
+                                        'Home',
+                                        style: TextStyle(
+                                          fontSize: 24.0,
+                                          color: Colors.white,
+                                          fontFamily: 'CircularSpotifyTxT-Bold',
                                         ),
                                       ),
-                                      Container(
-                                        width: pW * 0.91,
-                                        height: pH*0.17,
-                                        decoration: BoxDecoration(
-                                            color: Colors.transparent,
-                                            borderRadius: BorderRadius.circular(10)
-                                        ),
-                                        child: Padding(
-                                          padding:EdgeInsets.fromLTRB(16.0,pH*0.023,16,pH*0.0128),
-                                          child: Column(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                    ),
+                                    Column(
+                                      children: [
+                                        Container(
+                                          child: Stack(
                                             children: [
-                                              Container(
-                                                height: pH*0.0186,
-                            // width: pW*0.226,
-                                                child: Text(
-                                                  'Total Balance',
-                                                  style: TextStyle(
-                                                    fontSize: 13,
-                                                    color: Colors.white,
-                                                    fontFamily: 'CircularSpotifyTxT-Bold',
-                                                  ),
-                                                ),
-                                              ),
-                                              SizedBox(height: pH*0.0128),
-                                              Container(
-                                                height: pH*0.0442,
-                            // width: pW*0.5,
-                                                child: Text(
-                                                  '\$ ${userdatbject!.balance.toString()}',
-                                                  style: TextStyle(
-                                                    fontSize: 30,
-                                                    fontWeight: FontWeight.bold,
-                                                    color: Colors.white,
-                                                    fontFamily: 'CircularSpotifyTxT-Bold',
-                                                  ),
-                                                ),
-                                              ),
-                                              SizedBox(height: pH*0.0128),
-                                              Container(
-                                                padding: EdgeInsets.only(left: pW*0.042,top: pH*0.0058,bottom: pH*0.0058,right: pW*0.024),
-                                                decoration: BoxDecoration(
-                                                  color: Colors.transparent,
-                                                  borderRadius: BorderRadius.circular(40),
-                                                  border: Border.all(
-                                                    color: MyColors.color21,
-                                                    width: pW*0.00266,
-                                                  ),
-                                                ),
+                                              Transform.rotate(
+                                                angle: 15.68,
                                                 child: Container(
-                                                  width:pW*0.43536,
-                                                  child: Row(
-                                                    mainAxisAlignment:
-                                                    MainAxisAlignment.spaceEvenly,
+                                                  width: pW * 0.91,
+                                                  height: pH*0.17,
+                                                  decoration: BoxDecoration(
+                                                      color: MyColors.color22,
+                                                      borderRadius: BorderRadius.circular(10)
+                                                  ),
+                                                ),
+                                              ),
+
+                                              Container(
+                                                width: pW * 0.91,
+                                                height: pH*0.17,
+                                                decoration: BoxDecoration(
+                                                    color: MyColors.color11,
+                                                    borderRadius: BorderRadius.circular(10)
+                                                ),
+                                                child: Image.asset(
+                                                  'assets/Group 79.png',
+                                                ),
+                                              ),
+                                              Container(
+                                                width: pW * 0.91,
+                                                height: pH*0.17,
+                                                decoration: BoxDecoration(
+                                                    color: Colors.transparent,
+                                                    borderRadius: BorderRadius.circular(10)
+                                                ),
+                                                child: Padding(
+                                                  padding:EdgeInsets.fromLTRB(16.0,pH*0.023,16,pH*0.0128),
+                                                  child: Column(
+                                                    crossAxisAlignment: CrossAxisAlignment.start,
                                                     children: [
-                                                      Text(
-                                                        "total's earning",
-                                                        style: TextStyle(
-                                                          fontSize: 12,
-                                                          color: Colors.white,
-                                                          fontFamily: 'CircularSpotifyTxT-Bold',
+                                                      Container(
+                                                        height: pH*0.0186,
+                                                        // width: pW*0.226,
+                                                        child: Text(
+                                                          'Total Balance',
+                                                          style: TextStyle(
+                                                            fontSize: 13,
+                                                            color: Colors.white,
+                                                            fontFamily: 'CircularSpotifyTxT-Bold',
+                                                          ),
                                                         ),
                                                       ),
-                                                      SizedBox(
-                                                        width: pW*0.0266,
+                                                      SizedBox(height: pH*0.0128),
+                                                      Container(
+                                                        height: pH*0.0442,
+                                                        // width: pW*0.5,
+                                                        child: Text(
+                                                          '\$ ${userdatbject!.balance.toString()}',
+                                                          style: TextStyle(
+                                                            fontSize: 30,
+                                                            fontWeight: FontWeight.bold,
+                                                            color: Colors.white,
+                                                            fontFamily: 'CircularSpotifyTxT-Bold',
+                                                          ),
+                                                        ),
                                                       ),
-                                                      ClipRRect(
-                                                        borderRadius:
-                                                        BorderRadius.circular(20),
+                                                      SizedBox(height: pH*0.0128),
+                                                      Container(
+                                                        padding: EdgeInsets.only(left: pW*0.042,top: pH*0.0058,bottom: pH*0.0058,right: pW*0.024),
+                                                        decoration: BoxDecoration(
+                                                          color: Colors.transparent,
+                                                          borderRadius: BorderRadius.circular(40),
+                                                          border: Border.all(
+                                                            color: MyColors.color21,
+                                                            width: pW*0.00266,
+                                                          ),
+                                                        ),
                                                         child: Container(
-                                                          color: MyColors.color12,
+                                                          width:pW*0.43536,
                                                           child: Row(
+                                                            mainAxisAlignment:
+                                                            MainAxisAlignment.spaceEvenly,
                                                             children: [
-                                                              SvgPicture.asset(
-                                                                'assets/profit.svg',
-                                                              ),
-                                                              SizedBox(width: pW*0.0026,),
                                                               Text(
-                                                                '${percent.toStringAsFixed(2)}%',
+                                                                "total's earning",
                                                                 style: TextStyle(
                                                                   fontSize: 12,
-                                                                  color: MyColors.white,
+                                                                  color: Colors.white,
                                                                   fontFamily: 'CircularSpotifyTxT-Bold',
                                                                 ),
                                                               ),
+                                                              SizedBox(
+                                                                width: pW*0.0266,
+                                                              ),
+                                                              ClipRRect(
+                                                                borderRadius:
+                                                                BorderRadius.circular(20),
+                                                                child: Container(
+                                                                  color: MyColors.color12,
+                                                                  child: Row(
+                                                                    children: [
+                                                                      SvgPicture.asset(
+                                                                        'assets/profit.svg',
+                                                                      ),
+                                                                      SizedBox(width: pW*0.0026,),
+                                                                      Text(
+                                                                        '${percent.toStringAsFixed(2)}%',
+                                                                        style: TextStyle(
+                                                                          fontSize: 12,
+                                                                          color: MyColors.white,
+                                                                          fontFamily: 'CircularSpotifyTxT-Bold',
+                                                                        ),
+                                                                      ),
+                                                                    ],
+                                                                  ),
+                                                                ),
+                                                              )
                                                             ],
                                                           ),
                                                         ),
-                                                      )
+                                                      ),
                                                     ],
                                                   ),
                                                 ),
@@ -628,216 +641,215 @@ class _HomeState extends State<Home> {
                                             ],
                                           ),
                                         ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: pH * 0.03,
-                                ),
-                                Container(
-                                  width: pW * 0.95,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10),
-                                    color: Colors.transparent,
-                                  ),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                    children: [
-                                      Container(
-                                        width: pW*0.44,
-                                        height: pH*0.09,
-                                        decoration: BoxDecoration(
-                                          color: MyColors.color16,
-                                          borderRadius: BorderRadius.circular(12), // Adjust the radius as needed
+                                        SizedBox(
+                                          height: pH * 0.03,
                                         ),
-                                        child: TextButton(
-                                          onPressed: () {
-                                            Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (context) => Crypto()));
-                                          },
-                                          style: ButtonStyle(
-                                            overlayColor: MaterialStateProperty.all(Colors.transparent),
-                                            splashFactory: NoSplash.splashFactory,
+                                        Container(
+                                          width: pW * 0.95,
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(10),
+                                            color: Colors.transparent,
                                           ),
+                                          child: Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                            children: [
+                                              Container(
+                                                width: pW*0.44,
+                                                height: pH*0.09,
+                                                decoration: BoxDecoration(
+                                                  color: MyColors.color16,
+                                                  borderRadius: BorderRadius.circular(12), // Adjust the radius as needed
+                                                ),
+                                                child: TextButton(
+                                                  onPressed: () {
+                                                    Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                            builder: (context) => Crypto()));
+                                                  },
+                                                  style: ButtonStyle(
+                                                    overlayColor: MaterialStateProperty.all(Colors.transparent),
+                                                    splashFactory: NoSplash.splashFactory,
+                                                  ),
+                                                  child: Column(
+                                                    children: [
+                                                      SizedBox(height: pH*0.003,),
+                                                      SvgPicture.asset(
+                                                        'assets/cashback.svg',
+                                                      ),
+                                                      Text(
+                                                        'Crypto',
+                                                        style: TextStyle(
+                                                          fontSize: 14,
+                                                          color: Colors.white,
+                                                          fontFamily: 'CircularSpotifyTxT-Bold',
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                              Container(
+                                                decoration: BoxDecoration(
+                                                  color: MyColors.color16,
+                                                  borderRadius: BorderRadius.circular(12), // Adjust the radius as needed
+                                                ),
+                                                width: pW*0.44,
+                                                height: pH*0.09,
+                                                child: TextButton(
+                                                  onPressed: () {
+                                                    Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                            builder: (context) => Stocks()));
+                                                  },
+                                                  style: ButtonStyle(
+                                                    splashFactory: NoSplash.splashFactory,
+                                                    overlayColor: MaterialStateProperty.all(Colors.transparent),
+                                                  ),
+                                                  child: Column(
+                                                    children: [
+                                                      SizedBox(height: pH*0.003,),
+                                                      SvgPicture.asset(
+                                                        'assets/Analysis.svg',
+                                                      ),
+                                                      Text(
+                                                        'Explore Stocks',
+                                                        style: TextStyle(
+                                                          fontSize: 14,
+                                                          color: Colors.white,
+                                                          fontFamily: 'CircularSpotifyTxT-Bold',
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        SizedBox(height: pH*0.012,),
+                                        Container(
+                                          padding: EdgeInsets.only(left: 8),
+                                          width: double.infinity,
                                           child: Column(
                                             children: [
-                                              SizedBox(height: pH*0.003,),
-                                              SvgPicture.asset(
-                                                'assets/cashback.svg',
+                                              Align(
+                                                alignment: Alignment.topLeft,
+                                                child: Text(
+                                                  'Trending Stocks',
+                                                  style: TextStyle(
+                                                    fontSize: 14,
+                                                    color: Colors.white,
+                                                    fontFamily: 'CircularSpotifyTxT-Bold',
+                                                  ),
+                                                ),
                                               ),
+                                              SizedBox(
+                                                height: pH*0.01,
+                                              ),
+                                              Container(
+                                                height: pH * 0.14,
+                                                width: double.infinity,
+                                                color: Colors.transparent,
+                                                // child: ListView(
+                                                //   scrollDirection: Axis.horizontal,
+                                                //   children: [
+                                                //     StockCard(
+                                                //       imageUrl: 'assets/share3.svg',
+                                                //       name: 'BRRI',
+                                                //       price: '8,600',
+                                                //       change: '+50(+3.23%)',
+                                                //     ),
+                                                //     StockCard(
+                                                //       imageUrl: 'assets/share3.svg',
+                                                //       name: 'ARB',
+                                                //       price: '\$90.00',
+                                                //       change: '-\$5.00',
+                                                //     ),
+                                                //     StockCard(
+                                                //       imageUrl: 'assets/share3.svg',
+                                                //       name: 'FSX',
+                                                //       price: '\$110.00',
+                                                //       change: '+\$15.00',
+                                                //     ),
+                                                //     StockCard(
+                                                //       imageUrl: 'assets/share3.svg',
+                                                //       name: 'Stock 4',
+                                                //       price: '\$110.00',
+                                                //       change: '-\$15.00',
+                                                //     ),
+                                                //     StockCard(
+                                                //       imageUrl: 'assets/share3.svg',
+                                                //       name: 'Stock 5',
+                                                //       price: '\$110.00',
+                                                //       change: '+\$15.00',
+                                                //     ),
+                                                //     StockCard(
+                                                //       imageUrl: 'assets/share3.svg',
+                                                //       name: 'Stock 6',
+                                                //       price: '\$110.00',
+                                                //       change: '\$0.00',
+                                                //     ),
+                                                //   ],
+                                                // ),
+                                                child: ListView.builder(
+                                                    scrollDirection: Axis.horizontal,
+                                                    itemCount:trend.length,
+                                                    itemBuilder:(BuildContext context,int index){
+                                                      trendingsks item=trend[index];
+                                                      return StockCard(
+                                                        imageUrl: 'assets/share3.svg',
+                                                        name: item.name ?? "",
+                                                        price: item.price != null ? '${item.price.toString()}' : "",
+                                                        change: '+\$15.00',
+                                                      );
+                                                    }
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        Container(
+                                          padding: EdgeInsets.fromLTRB(16,8,16,0),
+                                          child: Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
                                               Text(
-                                                'Crypto',
+                                                'Watchlist',
                                                 style: TextStyle(
                                                   fontSize: 14,
                                                   color: Colors.white,
                                                   fontFamily: 'CircularSpotifyTxT-Bold',
                                                 ),
                                               ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                      Container(
-                                        decoration: BoxDecoration(
-                                          color: MyColors.color16,
-                                          borderRadius: BorderRadius.circular(12), // Adjust the radius as needed
-                                        ),
-                                        width: pW*0.44,
-                                        height: pH*0.09,
-                                        child: TextButton(
-                                          onPressed: () {
-                                            Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (context) => Stocks()));
-                                          },
-                                          style: ButtonStyle(
-                                            splashFactory: NoSplash.splashFactory,
-                                            overlayColor: MaterialStateProperty.all(Colors.transparent),
-                                          ),
-                                          child: Column(
-                                            children: [
-                                              SizedBox(height: pH*0.003,),
-                                              SvgPicture.asset(
-                                                'assets/Analysis.svg',
-                                              ),
-                                              Text(
-                                                'Explore Stocks',
-                                                style: TextStyle(
-                                                  fontSize: 14,
-                                                  color: Colors.white,
-                                                  fontFamily: 'CircularSpotifyTxT-Bold',
+                                              IconButton(
+                                                icon: SvgPicture.asset('assets/addpink.svg'),
+                                                onPressed: () {},
+                                                style: ButtonStyle(
+                                                  overlayColor: MaterialStateProperty.all(Colors.transparent),
+                                                  splashFactory: NoSplash.splashFactory,
                                                 ),
                                               ),
                                             ],
                                           ),
                                         ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                SizedBox(height: pH*0.012,),
-                                Container(
-                                  padding: EdgeInsets.only(left: 8),
-                                  width: double.infinity,
-                                  child: Column(
-                                    children: [
-                                      Align(
-                                        alignment: Alignment.topLeft,
-                                        child: Text(
-                                          'Trending Stocks',
-                                          style: TextStyle(
-                                            fontSize: 14,
-                                            color: Colors.white,
-                                            fontFamily: 'CircularSpotifyTxT-Bold',
-                                          ),
+                                        Column(
+                                          children: [
+                                            Padding(
+                                              padding:EdgeInsets.all(8.0),
+                                              child: _buildContent(), // Call the content method
+                                            ),
+                                          ],
                                         ),
-                                      ),
-                                      SizedBox(
-                                        height: pH*0.01,
-                                      ),
-                                      Container(
-                                        height: pH * 0.14,
-                                        width: double.infinity,
-                                        color: Colors.transparent,
-                                        // child: ListView(
-                                        //   scrollDirection: Axis.horizontal,
-                                        //   children: [
-                                        //     StockCard(
-                                        //       imageUrl: 'assets/share3.svg',
-                                        //       name: 'BRRI',
-                                        //       price: '8,600',
-                                        //       change: '+50(+3.23%)',
-                                        //     ),
-                                        //     StockCard(
-                                        //       imageUrl: 'assets/share3.svg',
-                                        //       name: 'ARB',
-                                        //       price: '\$90.00',
-                                        //       change: '-\$5.00',
-                                        //     ),
-                                        //     StockCard(
-                                        //       imageUrl: 'assets/share3.svg',
-                                        //       name: 'FSX',
-                                        //       price: '\$110.00',
-                                        //       change: '+\$15.00',
-                                        //     ),
-                                        //     StockCard(
-                                        //       imageUrl: 'assets/share3.svg',
-                                        //       name: 'Stock 4',
-                                        //       price: '\$110.00',
-                                        //       change: '-\$15.00',
-                                        //     ),
-                                        //     StockCard(
-                                        //       imageUrl: 'assets/share3.svg',
-                                        //       name: 'Stock 5',
-                                        //       price: '\$110.00',
-                                        //       change: '+\$15.00',
-                                        //     ),
-                                        //     StockCard(
-                                        //       imageUrl: 'assets/share3.svg',
-                                        //       name: 'Stock 6',
-                                        //       price: '\$110.00',
-                                        //       change: '\$0.00',
-                                        //     ),
-                                        //   ],
-                                        // ),
-                                        child: ListView.builder(
-                                            scrollDirection: Axis.horizontal,
-                                            itemCount:trend.length,
-                                            itemBuilder:(BuildContext context,int index){
-                                              trendingsks item=trend[index];
-                                              return StockCard(
-                                                imageUrl: 'assets/share3.svg',
-                                                name: item.name ?? "",
-                                                price: item.price != null ? '${item.price.toString()}' : "",
-                                                change: '+\$15.00',
-                                              );
-                                            }
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                Container(
-                                  padding: EdgeInsets.fromLTRB(16,8,16,0),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        'Watchlist',
-                                        style: TextStyle(
-                                          fontSize: 14,
-                                          color: Colors.white,
-                                          fontFamily: 'CircularSpotifyTxT-Bold',
-                                        ),
-                                      ),
-                                      IconButton(
-                                        icon: SvgPicture.asset('assets/addpink.svg'),
-                                        onPressed: () {},
-                                        style: ButtonStyle(
-                                          overlayColor: MaterialStateProperty.all(Colors.transparent),
-                                          splashFactory: NoSplash.splashFactory,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                Column(
-                                  children: [
-                                    Padding(
-                                      padding:EdgeInsets.all(8.0),
-                                      child: _buildContent(), // Call the content method
+                                      ],
                                     ),
                                   ],
                                 ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
+                              ),
+                            );
+                          }
+                        }
                     );
                   }
                 }
@@ -847,7 +859,6 @@ class _HomeState extends State<Home> {
     );
   }
 }
-
 class StockCard extends StatelessWidget {
   final String imageUrl;
   final String name;
